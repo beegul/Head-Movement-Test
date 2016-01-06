@@ -60,11 +60,11 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (Circle.transform.position != Centre.transform.position)
         {
-            if(SceneManager.GetActiveScene().name == "Test 2")//checks the current scenes name.
+            if(SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")//checks the current scenes name.
             {
                 Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, Centre.transform.position, speed * Time.deltaTime);
             }
-            if(SceneManager.GetActiveScene().name == "Test 3")
+            if(SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
             {
                 Circle.transform.position = Centre.transform.position;
             }
@@ -74,11 +74,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator right()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2")
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3")
+        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
         {
             Circle.transform.position = plus_X.transform.position;
         }
@@ -95,11 +95,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator left()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2")
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3")
+        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
         {
             Circle.transform.position = minus_X.transform.position;
         }
@@ -115,11 +115,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator top()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2")
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3")
+        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
         {
             Circle.transform.position = plus_Y.transform.position;
         }
@@ -135,11 +135,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2")
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3")
+        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
         {
             Circle.transform.position = minus_Y.transform.position;
         }
@@ -155,11 +155,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator top_left()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2")
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X_plus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3")
+        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
         {
             Circle.transform.position = minus_X_plus_Y.transform.position;
         }
@@ -175,11 +175,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom_right()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2")
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X_minus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3")
+        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
         {
             Circle.transform.position = plus_X_minus_Y.transform.position;
         }
@@ -195,11 +195,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator top_right()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2")
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X_plus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3")
+        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
         {
             Circle.transform.position = plus_X_plus_Y.transform.position;
         }
@@ -215,11 +215,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom_left()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2")
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X_minus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3")
+        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
         {
             Circle.transform.position = minus_X_minus_Y.transform.position;
         }
@@ -243,7 +243,7 @@ public class LoPresti : MonoBehaviour
         if (move_to_right == true)
         {
             StartCoroutine(right());
-            if (SceneManager.GetActiveScene().name == "Test 2")
+            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
             {
                 display_line(plus_X.transform.position);
             }
@@ -251,7 +251,7 @@ public class LoPresti : MonoBehaviour
         if (move_to_left == true)
         {
             StartCoroutine(left());
-            if (SceneManager.GetActiveScene().name == "Test 2")
+            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
             {
                 display_line(minus_X.transform.position);
             }
@@ -259,7 +259,7 @@ public class LoPresti : MonoBehaviour
         if (move_to_top == true)
         {
             StartCoroutine(top());
-            if (SceneManager.GetActiveScene().name == "Test 2")
+            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
             {
                 display_line(plus_Y.transform.position);
             }
@@ -267,7 +267,7 @@ public class LoPresti : MonoBehaviour
         if(move_to_bottom == true)
         {
             StartCoroutine(bottom());
-            if (SceneManager.GetActiveScene().name == "Test 2")
+            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
             {
                 display_line(minus_Y.transform.position);
             }
@@ -275,7 +275,7 @@ public class LoPresti : MonoBehaviour
         if(move_to_top_left)
         {
             StartCoroutine(top_left());
-            if (SceneManager.GetActiveScene().name == "Test 2")
+            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
             {
                 display_line(minus_X_plus_Y.transform.position);
             }
@@ -283,7 +283,7 @@ public class LoPresti : MonoBehaviour
         if(move_to_bottom_right)
         {
             StartCoroutine(bottom_right());
-            if (SceneManager.GetActiveScene().name == "Test 2")
+            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
             {
                 display_line(plus_X_minus_Y.transform.position);
             }
@@ -291,7 +291,7 @@ public class LoPresti : MonoBehaviour
         if(move_to_top_right)
         {
             StartCoroutine(top_right());
-            if (SceneManager.GetActiveScene().name == "Test 2")
+            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
             {
                 display_line(plus_X_plus_Y.transform.position);
             }
@@ -299,7 +299,7 @@ public class LoPresti : MonoBehaviour
         if(move_to_bottom_left)
         {
             StartCoroutine(bottom_left());
-            if (SceneManager.GetActiveScene().name == "Test 2")
+            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
             {
                 display_line(minus_X_minus_Y.transform.position);
             }
