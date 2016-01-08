@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.VR;
 
 public class LoPresti : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class LoPresti : MonoBehaviour
 
     public float speed;//sets the movement speed of the circle.
 
+    private bool run = false;
+
     void Awake()
     {
         //QualitySettings.vSyncCount = 0;//disable vsync.
@@ -54,6 +57,15 @@ public class LoPresti : MonoBehaviour
         line.SetVertexCount(2);
         line.material = material;
         line.SetWidth(0.1f, 0.1f);
+
+        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 3")//disables VR.
+        {
+            VRSettings.enabled = false;
+        }
+        if (SceneManager.GetActiveScene().name == "Test 2VR" || SceneManager.GetActiveScene().name == "Test 3VR")//enables VR.
+        {
+            VRSettings.enabled = true;
+        }
     }
     IEnumerator centre()
     {
@@ -240,68 +252,75 @@ public class LoPresti : MonoBehaviour
     }
     void Update()
     {
-        if (move_to_right == true)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(right());
-            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
-            {
-                display_line(plus_X.transform.position);
-            }
+            run = true;
         }
-        if (move_to_left == true)
+        if(run == true)
         {
-            StartCoroutine(left());
-            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+            if (move_to_right == true)
             {
-                display_line(minus_X.transform.position);
+                StartCoroutine(right());
+                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                {
+                    display_line(plus_X.transform.position);
+                }
             }
-        }
-        if (move_to_top == true)
-        {
-            StartCoroutine(top());
-            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+            if (move_to_left == true)
             {
-                display_line(plus_Y.transform.position);
+                StartCoroutine(left());
+                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                {
+                    display_line(minus_X.transform.position);
+                }
             }
-        }
-        if(move_to_bottom == true)
-        {
-            StartCoroutine(bottom());
-            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+            if (move_to_top == true)
             {
-                display_line(minus_Y.transform.position);
+                StartCoroutine(top());
+                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                {
+                    display_line(plus_Y.transform.position);
+                }
             }
-        }
-        if(move_to_top_left)
-        {
-            StartCoroutine(top_left());
-            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+            if (move_to_bottom == true)
             {
-                display_line(minus_X_plus_Y.transform.position);
+                StartCoroutine(bottom());
+                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                {
+                    display_line(minus_Y.transform.position);
+                }
             }
-        }
-        if(move_to_bottom_right)
-        {
-            StartCoroutine(bottom_right());
-            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+            if (move_to_top_left)
             {
-                display_line(plus_X_minus_Y.transform.position);
+                StartCoroutine(top_left());
+                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                {
+                    display_line(minus_X_plus_Y.transform.position);
+                }
             }
-        }
-        if(move_to_top_right)
-        {
-            StartCoroutine(top_right());
-            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+            if (move_to_bottom_right)
             {
-                display_line(plus_X_plus_Y.transform.position);
+                StartCoroutine(bottom_right());
+                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                {
+                    display_line(plus_X_minus_Y.transform.position);
+                }
             }
-        }
-        if(move_to_bottom_left)
-        {
-            StartCoroutine(bottom_left());
-            if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+            if (move_to_top_right)
             {
-                display_line(minus_X_minus_Y.transform.position);
+                StartCoroutine(top_right());
+                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                {
+                    display_line(plus_X_plus_Y.transform.position);
+                }
+            }
+            if (move_to_bottom_left)
+            {
+                StartCoroutine(bottom_left());
+                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                {
+                    display_line(minus_X_minus_Y.transform.position);
+                }
             }
         }
     }
