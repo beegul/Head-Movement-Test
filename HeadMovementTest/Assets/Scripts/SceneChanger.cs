@@ -13,7 +13,7 @@ public class SceneChanger : MonoBehaviour
         }
         if (Input.GetKeyDown("1"))
         {
-            VRSettings.enabled = false;
+            VRSettings.enabled = false;//disables the VR for non-VR scenes.
             SceneManager.LoadScene("Test 1");
         }
         if (Input.GetKeyDown("2"))
@@ -30,7 +30,7 @@ public class SceneChanger : MonoBehaviour
         //VR Scenes
         if (Input.GetKeyDown("4"))
         {
-            VRSettings.enabled = true;
+            VRSettings.enabled = true;//enables the VR for VR scenes.
             SceneManager.LoadScene("Test 1VR");
         }
         if (Input.GetKeyDown("5"))
