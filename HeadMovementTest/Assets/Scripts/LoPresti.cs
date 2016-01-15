@@ -34,6 +34,15 @@ public class LoPresti : MonoBehaviour
 
     private bool run = false;
 
+    string VRTask2 = "VR Task 2";
+    string VRTask3 = "VR Task 3";
+
+    string NVRTask2 = "NVR Task 2";
+    string NVRTask3 = "NVR Task 3";
+
+    string NVRWTask2 = "NVRW Task 2";
+    string NVRWTask3 = "NVRW Task 3";
+
     void Awake()
     {
         //QualitySettings.vSyncCount = 0;//disable vsync.
@@ -58,11 +67,11 @@ public class LoPresti : MonoBehaviour
         line.material = material;
         line.SetWidth(0.1f, 0.1f);
 
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 3")//disables VR.
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == NVRWTask2 || SceneManager.GetActiveScene().name == NVRWTask3)//disables VR.
         {
             VRSettings.enabled = false;
         }
-        if (SceneManager.GetActiveScene().name == "Test 2VR" || SceneManager.GetActiveScene().name == "Test 3VR")//enables VR.
+        if (SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == VRTask3)//enables VR.
         {
             VRSettings.enabled = true;
         }
@@ -72,11 +81,11 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (Circle.transform.position != Centre.transform.position)
         {
-            if(SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")//checks the current scenes name.
+            if(SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)//checks the current scenes name.
             {
                 Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, Centre.transform.position, speed * Time.deltaTime);
             }
-            if(SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+            if(SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
             {
                 Circle.transform.position = Centre.transform.position;
             }
@@ -86,11 +95,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator right()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = plus_X.transform.position;
         }
@@ -107,11 +116,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator left()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = minus_X.transform.position;
         }
@@ -127,11 +136,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator top()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = plus_Y.transform.position;
         }
@@ -147,11 +156,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = minus_Y.transform.position;
         }
@@ -167,11 +176,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator top_left()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X_plus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = minus_X_plus_Y.transform.position;
         }
@@ -187,11 +196,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom_right()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X_minus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = plus_X_minus_Y.transform.position;
         }
@@ -207,11 +216,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator top_right()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X_plus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = plus_X_plus_Y.transform.position;
         }
@@ -227,11 +236,11 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom_left()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X_minus_Y.transform.position, speed * Time.deltaTime);
         }
-        if (SceneManager.GetActiveScene().name == "Test 3" || SceneManager.GetActiveScene().name == "Test 3VR")
+        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = minus_X_minus_Y.transform.position;
         }
@@ -261,7 +270,7 @@ public class LoPresti : MonoBehaviour
             if (move_to_right == true)
             {
                 StartCoroutine(right());
-                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
                 {
                     display_line(plus_X.transform.position);
                 }
@@ -269,7 +278,7 @@ public class LoPresti : MonoBehaviour
             if (move_to_left == true)
             {
                 StartCoroutine(left());
-                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
                 {
                     display_line(minus_X.transform.position);
                 }
@@ -277,7 +286,7 @@ public class LoPresti : MonoBehaviour
             if (move_to_top == true)
             {
                 StartCoroutine(top());
-                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
                 {
                     display_line(plus_Y.transform.position);
                 }
@@ -285,7 +294,7 @@ public class LoPresti : MonoBehaviour
             if (move_to_bottom == true)
             {
                 StartCoroutine(bottom());
-                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
                 {
                     display_line(minus_Y.transform.position);
                 }
@@ -293,7 +302,7 @@ public class LoPresti : MonoBehaviour
             if (move_to_top_left)
             {
                 StartCoroutine(top_left());
-                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
                 {
                     display_line(minus_X_plus_Y.transform.position);
                 }
@@ -301,7 +310,7 @@ public class LoPresti : MonoBehaviour
             if (move_to_bottom_right)
             {
                 StartCoroutine(bottom_right());
-                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
                 {
                     display_line(plus_X_minus_Y.transform.position);
                 }
@@ -309,7 +318,7 @@ public class LoPresti : MonoBehaviour
             if (move_to_top_right)
             {
                 StartCoroutine(top_right());
-                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
                 {
                     display_line(plus_X_plus_Y.transform.position);
                 }
@@ -317,7 +326,7 @@ public class LoPresti : MonoBehaviour
             if (move_to_bottom_left)
             {
                 StartCoroutine(bottom_left());
-                if (SceneManager.GetActiveScene().name == "Test 2" || SceneManager.GetActiveScene().name == "Test 2VR")
+                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
                 {
                     display_line(minus_X_minus_Y.transform.position);
                 }

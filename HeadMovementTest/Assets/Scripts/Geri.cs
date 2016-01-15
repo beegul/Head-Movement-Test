@@ -16,6 +16,10 @@ public class Geri : MonoBehaviour
 
     GameObject target;
 
+    string NVRTask1 = "NVR Task 1";
+    string VRTask1 = "VR Task 1";
+    string NVRWTask1 = "NVRW Task 1";
+
     void Start ()
     {
         run = false;
@@ -27,11 +31,11 @@ public class Geri : MonoBehaviour
         sprite.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
         //enables/disables if one of these scenes are loaded first and not swtiched to by the scenechanger. saves the headache.
-        if (SceneManager.GetActiveScene().name == "Test 1")//disables VR.
+        if (SceneManager.GetActiveScene().name == NVRTask1 || SceneManager.GetActiveScene().name == NVRWTask1)//disables VR.
         {
             VRSettings.enabled = false;
         }
-        if (SceneManager.GetActiveScene().name == "Test 1VR")//enables VR.
+        if (SceneManager.GetActiveScene().name == VRTask1)//enables VR.
         {
             VRSettings.enabled = true;
         }
