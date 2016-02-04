@@ -12,8 +12,6 @@ public class Geri : MonoBehaviour
     private float start_time;
     public SpriteRenderer sprite;
 
-    private bool run = false;
-
     GameObject target;
 
     string NVRTask1 = "NVR Task 1";
@@ -22,8 +20,6 @@ public class Geri : MonoBehaviour
 
     void Start ()
     {
-        run = false;
-
         target = GameObject.Find("Target");
         start_time = Time.time;
 
@@ -43,14 +39,7 @@ public class Geri : MonoBehaviour
 	
 	void Update ()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            run = true;
-        }
-        if(run == true)
-        {
-            float t = (Time.time - start_time) / duration;
-            sprite.color = new Color(1.0f, 1.0f, 1.0f, Mathf.SmoothStep(minimum, maximum, t));
-        }      
+        float t = (Time.time - start_time) / duration;
+        sprite.color = new Color(1.0f, 1.0f, 1.0f, Mathf.SmoothStep(minimum, maximum, t));    
 	}
 }

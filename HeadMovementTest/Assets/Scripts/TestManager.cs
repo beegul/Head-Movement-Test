@@ -16,11 +16,6 @@ public class TestManager : MonoBehaviour
     private bool pause = false;
     private bool automize;
 
-    private bool run_first = true;
-    private bool run_second = false;
-    private bool run_third = false;
-    private bool finish_test = false;
-
     void randomize_test()//randomises the condition/task order every time the application starts.
     {
         int element = 0;
@@ -84,20 +79,19 @@ public class TestManager : MonoBehaviour
     {
         automize = true;
         Debug.Log("running vr coroutine");
-        yield return new WaitForSeconds(10);
         SceneManager.LoadScene(11);
         yield return new WaitForSeconds(5);
 
         for(int i = 0; i < 3; i ++)
         {
-            if (i > 0)//asks the user to keep the vr headset on as there is another vr test on its way.
+            if (i > 0 && i != 2)//asks the user to keep the vr headset on as there is another vr test on its way.
             {
                 SceneManager.LoadScene(15);
                 yield return new WaitForSeconds(5);
             }
 
             if (vr_list[i] == 1)
-            {
+            {                
                 SceneManager.LoadScene(16);
             }
             if (vr_list[i] == 2)
@@ -108,9 +102,18 @@ public class TestManager : MonoBehaviour
             {
                 SceneManager.LoadScene(20);
             }
-            yield return new WaitForSeconds(10);
+            pause = true;
 
-            SceneManager.LoadScene(vr_list[i]);
+            while(pause == true)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SceneManager.LoadScene(vr_list[i]);
+                    pause = false;
+                }
+                yield return null;
+            }
+
             pause = true;
 
             if (vr_list[i] == 1)//checks if the current scene is the search task.
@@ -126,9 +129,9 @@ public class TestManager : MonoBehaviour
             }
             else
             {
-                while (pause == true)
+                while(pause == true)
                 {
-                    if (Input.GetKeyDown(KeyCode.Return))
+                    if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
                     {
                         pause = false;
                     }
@@ -136,12 +139,30 @@ public class TestManager : MonoBehaviour
                 }
             }
         }
+        SceneManager.LoadScene(14);//tells the user to take of the vr head when the vr tests are done.
+        yield return new WaitForSeconds(5);
+
+        if(coroutine_list[0] == "vr")
+        {
+            StopCoroutine(coroutine_list[0]);
+            StartCoroutine(coroutine_list[1]);
+        }
+        if (coroutine_list[1] == "vr")
+        {
+            StopCoroutine(coroutine_list[1]);
+            StartCoroutine(coroutine_list[2]);
+        }
+        if (coroutine_list[2] == "vr")
+        {
+            StopCoroutine(coroutine_list[2]);
+            SceneManager.LoadScene(10);
+        }
+
     }
     IEnumerator nvr()
     {
         automize = true;
         Debug.Log("running nvr coroutine");
-        yield return new WaitForSeconds(10);
         SceneManager.LoadScene(12);
         yield return new WaitForSeconds(5);
 
@@ -159,9 +180,18 @@ public class TestManager : MonoBehaviour
             {
                 SceneManager.LoadScene(21);
             }
-            yield return new WaitForSeconds(10);
+            pause = true;
 
-            SceneManager.LoadScene(nvr_list[i]);
+            while (pause == true)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SceneManager.LoadScene(nvr_list[i]);
+                    pause = false;
+                }
+                yield return null;
+            }
+
             pause = true;
 
             if (nvr_list[i] == 4)//checks if the current scene is the search task.
@@ -179,7 +209,7 @@ public class TestManager : MonoBehaviour
             {
                 while (pause == true)
                 {
-                    if (Input.GetKeyDown(KeyCode.Return))
+                    if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
                     {
                         pause = false;
                     }
@@ -187,12 +217,26 @@ public class TestManager : MonoBehaviour
                 }
             }
         }
+        if (coroutine_list[0] == "nvr")//checks to see if this is the current coroutine, and if it is, load the next coroutine when this one has finished.
+        {
+            StopCoroutine(coroutine_list[0]);
+            StartCoroutine(coroutine_list[1]);
+        }
+        if (coroutine_list[1] == "nvr")
+        {
+            StopCoroutine(coroutine_list[1]);
+            StartCoroutine(coroutine_list[2]);
+        }
+        if (coroutine_list[2] == "nvr")
+        {
+            StopCoroutine(coroutine_list[2]);
+            SceneManager.LoadScene(10);
+        }
     }
     IEnumerator nvrw()
     {
         automize = true;
         Debug.Log("running nvrw coroutine");
-        yield return new WaitForSeconds(10);
         SceneManager.LoadScene(13);
         yield return new WaitForSeconds(5);
 
@@ -210,9 +254,18 @@ public class TestManager : MonoBehaviour
             {
                 SceneManager.LoadScene(21);
             }
-            yield return new WaitForSeconds(10);
+            pause = true;
 
-            SceneManager.LoadScene(nvrw_list[i]);
+            while (pause == true)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SceneManager.LoadScene(nvrw_list[i]);
+                    pause = false;
+                }
+                yield return null;
+            }
+
             pause = true;
 
             if (nvrw_list[i] == 7)//checks if the current scene is the search task.
@@ -230,13 +283,28 @@ public class TestManager : MonoBehaviour
             {
                 while (pause == true)
                 {
-                    if (Input.GetKeyDown(KeyCode.Return))
+                    if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
                     {
                         pause = false;
                     }
                     yield return null;
                 }
             }
+        }
+        if (coroutine_list[0] == "nvrw")
+        {
+            StopCoroutine(coroutine_list[0]);
+            StartCoroutine(coroutine_list[1]);
+        }
+        if (coroutine_list[1] == "nvrw")
+        {
+            StopCoroutine(coroutine_list[1]);
+            StartCoroutine(coroutine_list[2]);
+        }
+        if (coroutine_list[2] == "nvrw")
+        {
+            StopCoroutine(coroutine_list[2]);
+            SceneManager.LoadScene(10);
         }
     }
     void Start()
@@ -255,31 +323,9 @@ public class TestManager : MonoBehaviour
     {
         if(!automize)
         {
-            //TODO - find a way to make sure the first coroutine executes fully before the next one starts.
-
-
-
-            if (run_first == true)         
+            if(Input.GetKeyDown(KeyCode.Space))//starts the coroutines when the pace button is pressed on the start screen.
             {
                 StartCoroutine(coroutine_list[0]);
-                run_first = false;
-                run_second = true;
-            }
-            if(run_second == true)
-            {
-                StartCoroutine(coroutine_list[1]);
-                run_second = false;
-                run_third = true;
-            }
-            if(run_third == true)
-            {
-                StartCoroutine(coroutine_list[2]);
-                run_third = false;
-                finish_test = true;
-            }
-            if(finish_test == true)
-            {
-                SceneManager.LoadScene(10);
             }
         }
     }

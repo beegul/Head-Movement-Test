@@ -32,8 +32,6 @@ public class LoPresti : MonoBehaviour
 
     public float speed;//sets the movement speed of the circle.
 
-    private bool run = false;
-
     string VRTask2 = "VR Task 2";
     string VRTask3 = "VR Task 3";
 
@@ -42,6 +40,9 @@ public class LoPresti : MonoBehaviour
 
     string NVRWTask2 = "NVRW Task 2";
     string NVRWTask3 = "NVRW Task 3";
+
+    bool finished = false;
+    public bool load_next = false;
 
     void Awake()
     {
@@ -89,6 +90,10 @@ public class LoPresti : MonoBehaviour
             {
                 Circle.transform.position = Centre.transform.position;
             }
+        }
+        if (Circle.transform.position == Centre.transform.position && finished == true)
+        {
+            load_next = true;
         }
         yield return new WaitForSeconds(2.0f);
     }
@@ -250,7 +255,8 @@ public class LoPresti : MonoBehaviour
 
             move_to_bottom_left = false;
             yield return StartCoroutine(centre());
-            move_to_right = true;
+            //move_to_right = true;
+            finished = true;
         }
     }
     public void display_line(Vector3 destination)//function that displays the line between the centre and the passed in vector 3.
@@ -261,75 +267,68 @@ public class LoPresti : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (move_to_right == true)
         {
-            run = true;
+            StartCoroutine(right());
+            if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+            {
+                display_line(plus_X.transform.position);
+            }
         }
-        if(run == true)
+        if (move_to_left == true)
         {
-            if (move_to_right == true)
+            StartCoroutine(left());
+            if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                StartCoroutine(right());
-                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
-                {
-                    display_line(plus_X.transform.position);
-                }
+                display_line(minus_X.transform.position);
             }
-            if (move_to_left == true)
+        }
+        if (move_to_top == true)
+        {
+            StartCoroutine(top());
+            if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                StartCoroutine(left());
-                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
-                {
-                    display_line(minus_X.transform.position);
-                }
+                display_line(plus_Y.transform.position);
             }
-            if (move_to_top == true)
+        }
+        if (move_to_bottom == true)
+        {
+            StartCoroutine(bottom());
+            if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                StartCoroutine(top());
-                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
-                {
-                    display_line(plus_Y.transform.position);
-                }
+                display_line(minus_Y.transform.position);
             }
-            if (move_to_bottom == true)
+        }
+        if (move_to_top_left)
+        {
+            StartCoroutine(top_left());
+            if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                StartCoroutine(bottom());
-                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
-                {
-                    display_line(minus_Y.transform.position);
-                }
+                display_line(minus_X_plus_Y.transform.position);
             }
-            if (move_to_top_left)
+        }
+        if (move_to_bottom_right)
+        {
+            StartCoroutine(bottom_right());
+            if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                StartCoroutine(top_left());
-                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
-                {
-                    display_line(minus_X_plus_Y.transform.position);
-                }
+                display_line(plus_X_minus_Y.transform.position);
             }
-            if (move_to_bottom_right)
+        }
+        if (move_to_top_right)
+        {
+            StartCoroutine(top_right());
+            if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                StartCoroutine(bottom_right());
-                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
-                {
-                    display_line(plus_X_minus_Y.transform.position);
-                }
+                display_line(plus_X_plus_Y.transform.position);
             }
-            if (move_to_top_right)
+        }
+        if (move_to_bottom_left)
+        {
+            StartCoroutine(bottom_left());
+            if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                StartCoroutine(top_right());
-                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
-                {
-                    display_line(plus_X_plus_Y.transform.position);
-                }
-            }
-            if (move_to_bottom_left)
-            {
-                StartCoroutine(bottom_left());
-                if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
-                {
-                    display_line(minus_X_minus_Y.transform.position);
-                }
+                display_line(minus_X_minus_Y.transform.position);
             }
         }
     }
