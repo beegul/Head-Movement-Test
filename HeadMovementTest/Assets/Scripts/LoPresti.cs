@@ -44,10 +44,12 @@ public class LoPresti : MonoBehaviour
     bool finished = false;
     public bool load_next = false;
 
+    float close_enough = 0.001f;
+
     void Awake()
     {
         //QualitySettings.vSyncCount = 0;//disable vsync.
-        Application.targetFrameRate = 60;//lock fps.
+        //Application.targetFrameRate = 60;//lock fps.
     }
 
     void Start ()
@@ -80,7 +82,8 @@ public class LoPresti : MonoBehaviour
     IEnumerator centre()
     {
         yield return new WaitForSeconds(2.0f);
-        if (Circle.transform.position != Centre.transform.position)
+        //if (Circle.transform.position != Centre.transform.position)
+        if(Vector3.Distance(Circle.transform.position, Centre.transform.position) > close_enough)
         {
             if(SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)//checks the current scenes name.
             {
@@ -102,7 +105,10 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
-            Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X.transform.position, speed * Time.deltaTime);
+            if(Vector3.Distance(Circle.transform.position, plus_X.transform.position) > close_enough)
+            {
+                Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X.transform.position, speed * Time.deltaTime);
+            }
         }
         if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
@@ -123,7 +129,10 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
-            Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X.transform.position, speed * Time.deltaTime);
+            if (Vector3.Distance(Circle.transform.position, minus_X.transform.position) > close_enough)
+            {
+                Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X.transform.position, speed * Time.deltaTime);
+            }
         }
         if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
@@ -143,7 +152,10 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
-            Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_Y.transform.position, speed * Time.deltaTime);
+            if (Vector3.Distance(Circle.transform.position, plus_Y.transform.position) > close_enough)
+            {
+                Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_Y.transform.position, speed * Time.deltaTime);
+            }
         }
         if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
@@ -163,7 +175,10 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
-            Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_Y.transform.position, speed * Time.deltaTime);
+            if (Vector3.Distance(Circle.transform.position, minus_Y.transform.position) > close_enough)
+            {
+                Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_Y.transform.position, speed * Time.deltaTime);
+            }
         }
         if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
@@ -183,7 +198,10 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
-            Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X_plus_Y.transform.position, speed * Time.deltaTime);
+            if (Vector3.Distance(Circle.transform.position, minus_X_plus_Y.transform.position) > close_enough)
+            {
+                Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X_plus_Y.transform.position, speed * Time.deltaTime);
+            }
         }
         if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
@@ -203,7 +221,10 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
-            Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X_minus_Y.transform.position, speed * Time.deltaTime);
+            if (Vector3.Distance(Circle.transform.position, plus_X_minus_Y.transform.position) > close_enough)
+            {
+                Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X_minus_Y.transform.position, speed * Time.deltaTime);
+            }
         }
         if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
@@ -223,7 +244,10 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
-            Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X_plus_Y.transform.position, speed * Time.deltaTime);
+            if (Vector3.Distance(Circle.transform.position, plus_X_plus_Y.transform.position) > close_enough)
+            {
+                Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, plus_X_plus_Y.transform.position, speed * Time.deltaTime);
+            }
         }
         if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
@@ -243,7 +267,10 @@ public class LoPresti : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
         {
-            Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X_minus_Y.transform.position, speed * Time.deltaTime);
+            if (Vector3.Distance(Circle.transform.position, minus_X_minus_Y.transform.position) > close_enough)
+            {
+                Circle.transform.position = Vector3.MoveTowards(Circle.transform.position, minus_X_minus_Y.transform.position, speed * Time.deltaTime);
+            }
         }
         if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
         {
@@ -272,7 +299,7 @@ public class LoPresti : MonoBehaviour
             StartCoroutine(right());
             if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                display_line(plus_X.transform.position);
+                //display_line(plus_X.transform.position);
             }
         }
         if (move_to_left == true)
@@ -280,7 +307,7 @@ public class LoPresti : MonoBehaviour
             StartCoroutine(left());
             if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                display_line(minus_X.transform.position);
+                //display_line(minus_X.transform.position);
             }
         }
         if (move_to_top == true)
@@ -288,7 +315,7 @@ public class LoPresti : MonoBehaviour
             StartCoroutine(top());
             if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                display_line(plus_Y.transform.position);
+                //display_line(plus_Y.transform.position);
             }
         }
         if (move_to_bottom == true)
@@ -296,7 +323,7 @@ public class LoPresti : MonoBehaviour
             StartCoroutine(bottom());
             if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                display_line(minus_Y.transform.position);
+                //display_line(minus_Y.transform.position);
             }
         }
         if (move_to_top_left)
@@ -304,7 +331,7 @@ public class LoPresti : MonoBehaviour
             StartCoroutine(top_left());
             if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                display_line(minus_X_plus_Y.transform.position);
+                //display_line(minus_X_plus_Y.transform.position);
             }
         }
         if (move_to_bottom_right)
@@ -312,7 +339,7 @@ public class LoPresti : MonoBehaviour
             StartCoroutine(bottom_right());
             if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                display_line(plus_X_minus_Y.transform.position);
+                //display_line(plus_X_minus_Y.transform.position);
             }
         }
         if (move_to_top_right)
@@ -320,7 +347,7 @@ public class LoPresti : MonoBehaviour
             StartCoroutine(top_right());
             if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                display_line(plus_X_plus_Y.transform.position);
+                //display_line(plus_X_plus_Y.transform.position);
             }
         }
         if (move_to_bottom_left)
@@ -328,7 +355,7 @@ public class LoPresti : MonoBehaviour
             StartCoroutine(bottom_left());
             if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
             {
-                display_line(minus_X_minus_Y.transform.position);
+                //display_line(minus_X_minus_Y.transform.position);
             }
         }
     }

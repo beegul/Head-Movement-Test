@@ -23,16 +23,18 @@ public class Geri : MonoBehaviour
         target = GameObject.Find("Target");
         start_time = Time.time;
 
-        target.transform.position = new Vector3(Random.Range(-11.0f, 11.0f), Random.Range(-6.0f, 10.0f), -1.0f);
+
         sprite.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
         //enables/disables if one of these scenes are loaded first and not swtiched to by the scenechanger. saves the headache.
         if (SceneManager.GetActiveScene().name == NVRTask1 || SceneManager.GetActiveScene().name == NVRWTask1)//disables VR.
         {
+            target.transform.position = new Vector3(Random.Range(-11.0f, 11.0f), Random.Range(-6.0f, 10.0f), -1.0f);
             VRSettings.enabled = false;
         }
-        if (SceneManager.GetActiveScene().name == VRTask1)//enables VR.
+        if (SceneManager.GetActiveScene().name == VRTask1)//enables VR and sets position of the target within the vr scene.
         {
+            target.transform.position = new Vector3(Random.Range(-1.3f, 1.3f), Random.Range(1.95f, 3.2f), -3.5f);
             VRSettings.enabled = true;
         }
     }
