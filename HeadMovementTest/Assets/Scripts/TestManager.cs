@@ -318,6 +318,8 @@ public class TestManager : MonoBehaviour
         {
             Debug.Log(coroutine_list[i]);
         }
+
+        //System.Diagnostics.Process.Start("sensor.py");//runs python script when program starts. this isnt they way we need to do it though, but it starts in from the program atleast!
     }
     void Update()
     {
