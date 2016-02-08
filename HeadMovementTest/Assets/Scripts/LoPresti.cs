@@ -48,8 +48,8 @@ public class LoPresti : MonoBehaviour
 
     void Awake()
     {
-        //QualitySettings.vSyncCount = 0;//disable vsync.
-        //Application.targetFrameRate = 60;//lock fps.
+        QualitySettings.vSyncCount = 0;//disable vsync. enable when you are the 165hz monitor
+        Application.targetFrameRate = 60;//lock fps.
     }
 
     void Start ()

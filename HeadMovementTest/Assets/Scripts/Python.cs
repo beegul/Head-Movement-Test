@@ -10,24 +10,23 @@ public class Python : MonoBehaviour
         p.StartInfo.FileName = "python";
         p.StartInfo.Arguments = "sensor.py";
 
+        p.StartInfo.RedirectStandardError = true;
+        p.StartInfo.RedirectStandardOutput = true;
+        p.StartInfo.CreateNoWindow = true;
+
         p.StartInfo.WorkingDirectory = @"C:\Python\Scripts";
         p.StartInfo.UseShellExecute = false;
 
         p.Start();
 
         UnityEngine.Debug.Log(p.StandardOutput.ReadToEnd());
+        UnityEngine.Debug.Log("Python Started");
         p.WaitForExit();
         p.Close();
     }
-    // Use this for initialization
     void Start ()
     {
         testing();
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
+
 }
