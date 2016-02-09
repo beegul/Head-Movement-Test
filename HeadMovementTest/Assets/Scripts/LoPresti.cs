@@ -17,6 +17,8 @@ public class LoPresti : MonoBehaviour
     private GameObject plus_X_minus_Y;
     private GameObject Centre;
 
+    
+
     //Declarations of movement bools.
     private bool move_to_right = true;
     private bool move_to_left = false;
