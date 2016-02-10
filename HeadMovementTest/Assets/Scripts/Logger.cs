@@ -17,7 +17,7 @@ public class Logger : MonoBehaviour
 {
     int participant = 1;
 
-    float time;
+    //float time;
     Log logger = new Log();
 
     void Start ()
@@ -55,7 +55,7 @@ public class Logger : MonoBehaviour
     }
 	void Update ()
     {
-        time = Time.time;
+        //time = Time.time;
         //logger.writetofile(time.ToString()); write the current time to the log file every update loop.
 	}
 }

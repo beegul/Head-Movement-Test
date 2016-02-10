@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 public class TestManager : MonoBehaviour
 {
-    public List<List<int>> condition_list = new List<List<int>>();//list of lists.
+    private List<List<int>> condition_list = new List<List<int>>();//list of lists.
 
-    public List<int> vr_list = new List<int>();
-    public List<int> nvr_list = new List<int>();
-    public List<int> nvrw_list = new List<int>();
+    private List<int> vr_list = new List<int>();
+    private List<int> nvr_list = new List<int>();
+    private List<int> nvrw_list = new List<int>();
 
-    public List<string> coroutine_list = new List<string>();//stores the names of the coroutines in the order that they have been randomly put into.
+    private List<string> coroutine_list = new List<string>();//stores the names of the coroutines in the order that they have been randomly put into.
 
     private bool pause = false;
     private bool automize;
@@ -78,7 +78,7 @@ public class TestManager : MonoBehaviour
     IEnumerator vr()
     {
         automize = true;
-        Debug.Log("running vr coroutine");
+        //Debug.Log("running vr coroutine");
         SceneManager.LoadScene(11);
         yield return new WaitForSeconds(5);
 
@@ -162,7 +162,7 @@ public class TestManager : MonoBehaviour
     IEnumerator nvr()
     {
         automize = true;
-        Debug.Log("running nvr coroutine");
+        //Debug.Log("running nvr coroutine");
         SceneManager.LoadScene(12);
         yield return new WaitForSeconds(5);
 
@@ -236,7 +236,7 @@ public class TestManager : MonoBehaviour
     IEnumerator nvrw()
     {
         automize = true;
-        Debug.Log("running nvrw coroutine");
+        //Debug.Log("running nvrw coroutine");
         SceneManager.LoadScene(13);
         yield return new WaitForSeconds(5);
 
@@ -313,11 +313,11 @@ public class TestManager : MonoBehaviour
         randomize_test();
 
         //debug to show current order of coroutines.
-        Debug.Log("test order:");
-        for (int i = 0; i < coroutine_list.Count; i++)
-        {
-            Debug.Log(coroutine_list[i]);
-        }
+        //Debug.Log("test order:");
+        //for (int i = 0; i < coroutine_list.Count; i++)
+        //{
+        //    Debug.Log(coroutine_list[i]);
+        //}
 
         //System.Diagnostics.Process.Start("sensor.py");//runs python script when program starts. this isnt they way we need to do it though, but it starts in from the program atleast!
     }

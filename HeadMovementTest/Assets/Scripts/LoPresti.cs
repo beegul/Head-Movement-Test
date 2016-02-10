@@ -29,7 +29,7 @@ public class LoPresti : MonoBehaviour
     private bool move_to_top_right = false;
     private bool move_to_bottom_left = false;
 
-    private LineRenderer line;
+    //private LineRenderer line;
     public Material material;
 
     public float speed;//sets the movement speed of the circle.
@@ -67,10 +67,10 @@ public class LoPresti : MonoBehaviour
         plus_X_minus_Y = GameObject.Find("+X-Y_Waypoint");
         Centre = GameObject.Find("Centre");
 
-        line = GetComponent<LineRenderer>();
-        line.SetVertexCount(2);
-        line.material = material;
-        line.SetWidth(0.1f, 0.1f);
+        //line = GetComponent<LineRenderer>();
+        //line.SetVertexCount(2);
+        //line.material = material;
+        //line.SetWidth(0.1f, 0.1f);
 
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == NVRWTask2 || SceneManager.GetActiveScene().name == NVRWTask3)//disables VR.
         {
@@ -288,12 +288,12 @@ public class LoPresti : MonoBehaviour
             finished = true;
         }
     }
-    public void display_line(Vector3 destination)//function that displays the line between the centre and the passed in vector 3.
-    {
-        line.enabled = true;
-        line.SetPosition(0, Centre.transform.position);//start
-        line.SetPosition(1, destination);//finish
-    }
+    //public void display_line(Vector3 destination)//function that displays the line between the centre and the passed in vector 3.
+    //{
+    //    line.enabled = true;
+    //    line.SetPosition(0, Centre.transform.position);//start
+    //    line.SetPosition(1, destination);//finish
+    //}
     void Update()
     {
         if (move_to_right == true)
