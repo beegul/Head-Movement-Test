@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 public class Log
 {
-    public string path = "C:\\Users\\Jack\\Documents\\GitHub\\MSc\\HeadMovementTest\\Participant.csv";//this is the first file that will be wrote to.
+    public string path = @"Participant Logs\Participant.csv";//this is the first file that will be wrote to.
     public void writetofile(string data)
     {
         File.AppendAllText(path, data + Environment.NewLine);
