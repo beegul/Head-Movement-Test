@@ -23,9 +23,11 @@ while True:
         heading, roll, pitch = bno.read_euler()
         sys, gyro, accel, mag = bno.get_calibration_status()
         print('Heading =' + str(heading) + ' ' + 'Roll =' + str(roll) + ' ' + 'Pitch =' + str(pitch) + '\t' + 'Sys_cal =' + str(sys) + ' ' + 'Gyro_cal =' + str(gyro) + ' ' + 'Accel_cal =' + str(accel) + ' ' + 'Mag_cal =' + str(mag))
-
-	#file.write("Heading={0:0.2F}, Roll={1:0.2F}, Pitch={2:0.2F},\tSys_cal={3}, Gyro_cal={4}, Accel_cal={5}, Mag_cal={6}, {7}".format(heading, roll, pitch, sys, gyro, accel, mag, time.time() - startime) + "\n")
-	#if msvcrt.kbhit():
-		#if ord(msvcrt.getch()) == 27:
-			#file.close()
+		
+		#print('Testing')
+				
+		#file.write("Heading={0:0.2F}, Roll={1:0.2F}, Pitch={2:0.2F},\tSys_cal={3}, Gyro_cal={4}, Accel_cal={5}, Mag_cal={6}, {7}".format(heading, roll, pitch, sys, gyro, accel, mag, time.time() - startime) + "\n")
+		#if msvcrt.kbhit():
+			#if ord(msvcrt.getch()) == 27:
+				#file.close()
  

@@ -109,6 +109,7 @@ public class TestManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     SceneManager.LoadScene(vr_list[i]);
+                    GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;//when the space bar is pressed, the stream data bool in the pythoh script is set to true. this starts reading data from the acceleromter and sending it to the to the logging script
                     pause = false;
                 }
                 yield return null;
@@ -122,6 +123,7 @@ public class TestManager : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0))//stops the test if the left mouse button is pressed.
                     {
+                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;//when the scene ends, stream_data is sent to false. this stop the data stream in the python script and stopp the data being logged in the logging script.
                         pause = false;
                     }
                     yield return null;
@@ -133,6 +135,7 @@ public class TestManager : MonoBehaviour
                 {
                     if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
                     {
+                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;//when the scene ends, stream_data is sent to false. this stop the data stream in the python script and stopp the data being logged in the logging script.
                         pause = false;
                     }
                     yield return null;
@@ -162,9 +165,7 @@ public class TestManager : MonoBehaviour
     IEnumerator nvr()
     {
         automize = true;
-        //Debug.Log("running nvr coroutine");
-        SceneManager.LoadScene(12);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0);//needs this to load the nvr instructions for some reason?
 
         for (int i = 0; i < nvr_list.Count; i++)
         {
@@ -187,6 +188,7 @@ public class TestManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     SceneManager.LoadScene(nvr_list[i]);
+                    GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;
                     pause = false;
                 }
                 yield return null;
@@ -200,6 +202,7 @@ public class TestManager : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0))//stops the test if the left mouse button is pressed.
                     {
+                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
                         pause = false;
                     }
                     yield return null;
@@ -211,6 +214,7 @@ public class TestManager : MonoBehaviour
                 {
                     if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
                     {
+                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
                         pause = false;
                     }
                     yield return null;
@@ -261,6 +265,7 @@ public class TestManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     SceneManager.LoadScene(nvrw_list[i]);
+                    GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;
                     pause = false;
                 }
                 yield return null;
@@ -274,6 +279,7 @@ public class TestManager : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0))//stops the test if the left mouse button is pressed.
                     {
+                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
                         pause = false;
                     }
                     yield return null;
@@ -285,12 +291,16 @@ public class TestManager : MonoBehaviour
                 {
                     if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
                     {
+                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
                         pause = false;
                     }
                     yield return null;
                 }
             }
         }
+        SceneManager.LoadScene(22);//tells the user to take of the weighted headband when the nvrw tests are done.
+        yield return new WaitForSeconds(5);
+
         if (coroutine_list[0] == "nvrw")
         {
             StopCoroutine(coroutine_list[0]);
@@ -318,8 +328,6 @@ public class TestManager : MonoBehaviour
         //{
         //    Debug.Log(coroutine_list[i]);
         //}
-
-        //System.Diagnostics.Process.Start("sensor.py");//runs python script when program starts. this isnt they way we need to do it though, but it starts in from the program atleast!
     }
     void Update()
     {

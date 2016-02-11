@@ -55,7 +55,12 @@ public class Logger : MonoBehaviour
     }
 	void Update ()
     {
+        if(GameObject.Find("TestManager").GetComponent<Python>().stream_data == true)//checks to see if the bool in the python script is true, if so it writes the data from the "myString" in the python script to the log file.
+        {
+            logger.writetofile(GameObject.Find("TestManager").GetComponent<Python>().myString);
+        }
+
         //time = Time.time;
         //logger.writetofile(time.ToString()); write the current time to the log file every update loop.
-	}
+    }
 }

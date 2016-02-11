@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/StartScreen.unity
+- path: Assets/Scenes/Other Scenes/Pre Test Instructions/VR Task 3 Instructions.unity
   isLoaded: 1
   isActive: 1
