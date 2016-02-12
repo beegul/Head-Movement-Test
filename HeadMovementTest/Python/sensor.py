@@ -22,7 +22,7 @@ print('Sensor Connection Succesful')
 while True:
         heading, roll, pitch = bno.read_euler()
         sys, gyro, accel, mag = bno.get_calibration_status()
-        print('Heading =' + str(heading) + ' ' + 'Roll =' + str(roll) + ' ' + 'Pitch =' + str(pitch) + '\t' + 'Sys_cal =' + str(sys) + ' ' + 'Gyro_cal =' + str(gyro) + ' ' + 'Accel_cal =' + str(accel) + ' ' + 'Mag_cal =' + str(mag))
+        print('Heading =' + str(heading) + ',' + 'Roll =' + str(roll) + ',' + 'Pitch =' + str(pitch) + ',' + 'Sys_cal =' + str(sys) + ',' + 'Gyro_cal =' + str(gyro) + ',' + 'Accel_cal =' + str(accel) + ',' + 'Mag_cal =' + str(mag))
 		
 		#print('Testing')
 				

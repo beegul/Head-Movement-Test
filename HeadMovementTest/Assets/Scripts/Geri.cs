@@ -29,7 +29,7 @@ public class Geri : MonoBehaviour
         //enables/disables if one of these scenes are loaded first and not swtiched to by the scenechanger. saves the headache.
         if (SceneManager.GetActiveScene().name == NVRTask1 || SceneManager.GetActiveScene().name == NVRWTask1)//disables VR.
         {
-            target.transform.position = new Vector3(Random.Range(-11.0f, 11.0f), Random.Range(-6.0f, 10.0f), -1.0f);
+            target.transform.position = new Vector3(Random.Range(-25.0f, 25.0f), Random.Range(-15.0f, 15.0f), -1.0f);
             VRSettings.enabled = false;
         }
         if (SceneManager.GetActiveScene().name == VRTask1)//enables VR and sets position of the target within the vr scene.

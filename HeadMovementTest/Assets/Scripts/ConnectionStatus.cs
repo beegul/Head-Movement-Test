@@ -9,20 +9,17 @@ public class ConnectionStatus : MonoBehaviour
 	void Start ()
     {
         DontDestroyOnLoad(this);
-        ConnectionStatusText.enabled = false;
+        ConnectionStatusText.enabled = true;
     }
-	
-
 	void Update ()
     {
         if(GameObject.Find("TestManager").GetComponent<Python>().sensor_connected == true)
         {
             ConnectionStatusText.enabled = false;
         }
-        else
+        if(GameObject.Find("TestManager").GetComponent<Python>().sensor_connected == false)
         {
             ConnectionStatusText.enabled = true;
-        }
-	
+        }	
 	}
 }

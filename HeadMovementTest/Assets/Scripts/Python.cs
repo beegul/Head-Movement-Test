@@ -12,8 +12,8 @@ public class Python : MonoBehaviour
     StreamReader myStreamReader;
     public string myString;
 
-    public bool sensor_connected = false;
-    public bool stream_data;//will enable/disable the data stream to the log file. allowing only data during the tests to be logged.
+    public bool sensor_connected;//this is used to display the "sensor not connected" text from ConnectionStatus.cs
+    public bool stream_data;//this is enabled and disables in the TestManager.cs script, allowing data to only be read when the partcipants are completing the tasks.
 
     void Start ()
     {
@@ -33,35 +33,44 @@ public class Python : MonoBehaviour
         myProcess.StartInfo = myProcessStartInfo;
 
         myProcess.Start();
+
+        myStreamReader = myProcess.StandardOutput;
+        myString = myStreamReader.ReadLine();
+        if (String.IsNullOrEmpty(myString) == true)
+        {
+            sensor_connected = false;//sets this to false, which displays the text in ConnectionStatus.cs
+        }
+        else
+        {
+            sensor_connected = true;//need to trigger outside this function, it is only being called when stream_data is set to ture in the test manager script.
+        }
+    }
+
+    void check_connection()
+    {
+        //UnityEngine.Debug.Log("Checking connection");
+        if(String.IsNullOrEmpty(myString) == true)
+        {
+            sensor_connected = false;
+        }
     }
     void get_data()
     {
         myStreamReader = myProcess.StandardOutput;
-        myString = myStreamReader.ReadLine();
-
-        if (String.IsNullOrEmpty(myString) == true)
-        {
-            sensor_connected = false;
-            //myString = "If the sensor was connected, this would be logging data";
-            //UnityEngine.Debug.Log("Data not recived from sensor, please check connection");
-        }
-        else
-        {
-            sensor_connected = true;
-            UnityEngine.Debug.Log(myString);
-        }
+        myString = myStreamReader.ReadLine();//we are always logging acclerometer data.
     }
 	void Update ()
     {
+        check_connection();
         if(stream_data == true)
         {
-            UnityEngine.Debug.Log("Data stream true, logging data");
+            //UnityEngine.Debug.Log("Data stream true, logging data");
             get_data();
         }
-        else
-        {
-            UnityEngine.Debug.Log("Data stream not true, not logging data");
-        }
+        //else
+        //{
+            //UnityEngine.Debug.Log("Data stream not true, not logging data");
+        //}
     }
     void OnApplicationQuit()
     {
