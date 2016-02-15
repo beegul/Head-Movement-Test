@@ -20,7 +20,9 @@ public class Python : MonoBehaviour
         stream_data = false;
 
         string python = "python";
-        string python_script = @"Python/sensor.py";
+        //string python_script = @"Python/sensor.py";
+        string python_script = Application.persistentDataPath + "\\sensor.py";
+        //UnityEngine.Debug.Log(python_script);
 
         myProcessStartInfo = new ProcessStartInfo(python);
         myProcessStartInfo.UseShellExecute = false;

@@ -1,25 +1,37 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VR;
 using System.Collections;
 
 public class ConnectionStatus : MonoBehaviour
 {
-    public Text ConnectionStatusText;
+    public Text AccelerometerStatus;
+    public Text VRStatus;
 
-	void Start ()
+	void Start()
     {
         DontDestroyOnLoad(this);
-        ConnectionStatusText.enabled = true;
+        AccelerometerStatus.enabled = true;
+        VRStatus.enabled = true;
     }
 	void Update ()
     {
         if(GameObject.Find("TestManager").GetComponent<Python>().sensor_connected == true)
         {
-            ConnectionStatusText.enabled = false;
+            AccelerometerStatus.enabled = false;
         }
         if(GameObject.Find("TestManager").GetComponent<Python>().sensor_connected == false)
         {
-            ConnectionStatusText.enabled = true;
-        }	
-	}
+            AccelerometerStatus.enabled = true;
+        }
+
+        if (VRSettings.loadedDevice != VRDeviceType.None)
+        {
+            VRStatus.enabled = false;
+        }
+        if (VRSettings.loadedDevice == VRDeviceType.None)
+        {
+            VRStatus.enabled = true;
+        }
+    }
 }

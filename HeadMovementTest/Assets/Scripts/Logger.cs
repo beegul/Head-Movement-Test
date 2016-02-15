@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
 public class Log
-{
-    public string path = @"Participant Logs\Participant.csv";//this is the first file that will be wrote to.
+{   
+    //public string path = @"Participant Logs\Participant.csv";//this is the first file that will be wrote to.
+    public string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "\\Participant.csv";
     public void writetofile(string data)
     {
         File.AppendAllText(path, data + Environment.NewLine);
@@ -23,39 +24,46 @@ public class Logger : MonoBehaviour
     void Start ()
     {
         DontDestroyOnLoad(this);
-        string folder = Path.GetDirectoryName(logger.path);
-        string filename = Path.GetFileNameWithoutExtension(logger.path);
-        string extension = Path.GetExtension(logger.path);
-        int number = 1;
-        if (File.Exists(logger.path))
+        if (GameObject.Find("TestManager").GetComponent<Python>().sensor_connected == true)
         {
-            Match regex = Regex.Match(logger.path, @"(.+) \((\d+)\)\.\w+");
-            if (regex.Success)
+            string folder = Path.GetDirectoryName(logger.path);
+            string filename = Path.GetFileNameWithoutExtension(logger.path);
+            string extension = Path.GetExtension(logger.path);
+            int number = 1;
+            if (File.Exists(logger.path))
             {
-                filename = regex.Groups[1].Value;
-                number = int.Parse(regex.Groups[2].Value);
+                Match regex = Regex.Match(logger.path, @"(.+) \((\d+)\)\.\w+");
+                if (regex.Success)
+                {
+                    filename = regex.Groups[1].Value;
+                    number = int.Parse(regex.Groups[2].Value);
+                }
+                do
+                {
+                    participant++;
+                    number++;
+                    logger.path = Path.Combine(folder, string.Format("{0} {1}{2}", filename, number, extension));
+                }
+                while (File.Exists(logger.path));
             }
-            do
-            {
-                participant++;
-                number++;
-                logger.path = Path.Combine(folder, string.Format("{0} {1}{2}", filename, number, extension));
-            }
-            while (File.Exists(logger.path));
+            logger.writetofile("participant,test started,sceneloaded,scenetime");//data coloumns.
+            logger.writetofile(participant.ToString() + "," + "=\"" + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + "\"");//participant number and time of test start.
         }
-        logger.writetofile("participant,test started,sceneloaded,scenetime");//data coloumns.
-        logger.writetofile(participant.ToString() + "," + "=\"" + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + "\"");//participant number and time of test start.
     }
     void OnLevelWasLoaded()
     {
-        if(SceneManager.GetActiveScene().name != "StartScreen")
+        if (SceneManager.GetActiveScene().name != "StartScreen")
         {
             logger.writetofile(",," + SceneManager.GetActiveScene().name + "," + "=\"" + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + "\"");
+        }
+        if (GameObject.Find("TestManager").GetComponent<TestManager>().in_task == true)
+        {
+            logger.writetofile("Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal");
         }
     }
 	void Update ()
     {
-        if(GameObject.Find("TestManager").GetComponent<Python>().stream_data == true)//checks to see if the bool in the python script is true, if so it writes the data from the "myString" in the python script to the log file.
+        if (GameObject.Find("TestManager").GetComponent<Python>().stream_data == true)//checks to see if the bool in the python script is true, if so it writes the data from the "myString" in the python script to the log file.
         {
             logger.writetofile(GameObject.Find("TestManager").GetComponent<Python>().myString);
         }

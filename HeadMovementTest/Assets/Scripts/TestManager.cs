@@ -16,6 +16,8 @@ public class TestManager : MonoBehaviour
     private bool pause = false;
     private bool automize;
 
+    public bool in_task = false;
+
     void randomize_test()//randomises the condition/task order every time the application starts.
     {
         int element = 0;
@@ -108,11 +110,13 @@ public class TestManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    in_task = true;
                     SceneManager.LoadScene(vr_list[i]);
                     GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;//when the space bar is pressed, the stream data bool in the pythoh script is set to true. this starts reading data from the acceleromter and sending it to the to the logging script
                     pause = false;
                 }
                 yield return null;
+                in_task = false;
             }
 
             pause = true;
@@ -187,11 +191,13 @@ public class TestManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    in_task = true;
                     SceneManager.LoadScene(nvr_list[i]);
                     GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;
                     pause = false;
                 }
                 yield return null;
+                in_task = false;
             }
 
             pause = true;
@@ -264,11 +270,13 @@ public class TestManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    in_task = true;
                     SceneManager.LoadScene(nvrw_list[i]);
                     GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;
                     pause = false;
                 }
                 yield return null;
+                in_task = false;
             }
 
             pause = true;
@@ -328,6 +336,8 @@ public class TestManager : MonoBehaviour
         //{
         //    Debug.Log(coroutine_list[i]);
         //}
+
+        //Debug.Log(Application.persistentDataPath);
     }
     void Update()
     {
@@ -337,6 +347,10 @@ public class TestManager : MonoBehaviour
             {
                 StartCoroutine(coroutine_list[0]);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))//starts the coroutines when the pace button is pressed on the start screen.
+        {
+            Application.Quit();
         }
     }
 }
