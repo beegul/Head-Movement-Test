@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
 public class Log
-{   
-    //public string path = @"Participant Logs\Participant.csv";//this is the first file that will be wrote to.
-    public string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "\\Participant.csv";
+{
+    string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+    DirectoryInfo folder = Directory.CreateDirectory(@"C:\\Particpant Logs");
+    public string path = @"C:\\Particpant Logs\\Participant.csv";
     public void writetofile(string data)
     {
         File.AppendAllText(path, data + Environment.NewLine);
@@ -20,7 +21,6 @@ public class Logger : MonoBehaviour
 
     //float time;
     Log logger = new Log();
-
     void Start ()
     {
         DontDestroyOnLoad(this);
@@ -65,7 +65,7 @@ public class Logger : MonoBehaviour
     {
         if (GameObject.Find("TestManager").GetComponent<Python>().stream_data == true)//checks to see if the bool in the python script is true, if so it writes the data from the "myString" in the python script to the log file.
         {
-            logger.writetofile(GameObject.Find("TestManager").GetComponent<Python>().myString);
+            logger.writetofile(GameObject.Find("TestManager").GetComponent<Python>().python_output);
         }
 
         //time = Time.time;

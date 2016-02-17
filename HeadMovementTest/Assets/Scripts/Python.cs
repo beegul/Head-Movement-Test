@@ -2,64 +2,97 @@
 using System.Collections;
 using System;
 using System.IO;
+using System.IO.Ports;
 using System.Diagnostics;
 using UnityEngine.UI;
 
 public class Python : MonoBehaviour
 {
-    ProcessStartInfo myProcessStartInfo;
-    Process myProcess;
-    StreamReader myStreamReader;
-    public string myString;
+    ProcessStartInfo python_info;
+    Process python_process;
+    StreamReader python_streamreader;
+    public string python_output;
 
     public bool sensor_connected;//this is used to display the "sensor not connected" text from ConnectionStatus.cs
     public bool stream_data;//this is enabled and disables in the TestManager.cs script, allowing data to only be read when the partcipants are completing the tasks.
+    public bool com3_connected;
+
+    string[] ports;//array of ports;
+    string port = "COM3";//port acceleromter will connect to.
 
     void Start ()
     {
         stream_data = false;
 
         string python = "python";
-        //string python_script = @"Python/sensor.py";
-        string python_script = Application.persistentDataPath + "\\sensor.py";
-        //UnityEngine.Debug.Log(python_script);
+        string python_script =  @"Assets/Python/sensor.py";
+         
+        //UnityEngine.Debug.Log(python_script);//location of python script.
 
-        myProcessStartInfo = new ProcessStartInfo(python);
-        myProcessStartInfo.UseShellExecute = false;
-        myProcessStartInfo.RedirectStandardOutput = true;
-        myProcessStartInfo.CreateNoWindow = true;
+        python_info = new ProcessStartInfo(python);
+        python_info.UseShellExecute = false;
+        python_info.RedirectStandardOutput = true;
+        python_info.CreateNoWindow = true;
 
-        myProcessStartInfo.Arguments = python_script;
+        python_info.Arguments = python_script;
 
-        myProcess = new Process();
-        myProcess.StartInfo = myProcessStartInfo;
+        python_process = new Process();
+        python_process.StartInfo = python_info;
 
-        myProcess.Start();
+        python_process.Start();
 
-        myStreamReader = myProcess.StandardOutput;
-        myString = myStreamReader.ReadLine();
-        if (String.IsNullOrEmpty(myString) == true)
+        python_streamreader = python_process.StandardOutput;
+        python_output = python_streamreader.ReadLine();
+
+        ports = SerialPort.GetPortNames();
+
+        if (String.IsNullOrEmpty(python_output) == true)//intial check to see if data is being streamed from the sensor.
         {
+            //UnityEngine.Debug.Log("No Python data stream.");
             sensor_connected = false;//sets this to false, which displays the text in ConnectionStatus.cs
         }
         else
         {
-            sensor_connected = true;//need to trigger outside this function, it is only being called when stream_data is set to ture in the test manager script.
+            sensor_connected = true;
+        }
+
+        if (Array.IndexOf(ports, port) < 0)
+        {
+            UnityEngine.Debug.Log("COM3 not connected");
+            sensor_connected = false;
+            com3_connected = false;
+        }
+        else
+        {
+            com3_connected = true;
         }
     }
-
     void check_connection()
     {
-        //UnityEngine.Debug.Log("Checking connection");
-        if(String.IsNullOrEmpty(myString) == true)
+        ports = SerialPort.GetPortNames();
+        if (String.IsNullOrEmpty(python_output) == true)
         {
             sensor_connected = false;
+        }
+        else
+        {
+            sensor_connected = true;
+        }
+        if(Array.IndexOf(ports, port) < 0)
+        {
+            //UnityEngine.Debug.Log("COM3 not connected");
+            sensor_connected = false;
+            com3_connected = false;
+        }
+        else
+        {
+            com3_connected = true;
         }
     }
     void get_data()
     {
-        myStreamReader = myProcess.StandardOutput;
-        myString = myStreamReader.ReadLine();//we are always logging acclerometer data.
+        python_streamreader = python_process.StandardOutput;
+        python_output = python_streamreader.ReadLine();//we are always logging acclerometer data.
     }
 	void Update ()
     {
@@ -76,6 +109,6 @@ public class Python : MonoBehaviour
     }
     void OnApplicationQuit()
     {
-        myProcess.Close();
+        python_process.Close();
     }
 }
