@@ -18,8 +18,6 @@ public class Log
 public class Logger : MonoBehaviour
 {
     int participant = 1;
-
-    //float time;
     Log logger = new Log();
     void Start ()
     {
@@ -46,29 +44,22 @@ public class Logger : MonoBehaviour
                 }
                 while (File.Exists(logger.path));
             }
-            logger.writetofile("participant,test started,sceneloaded,scenetime");//data coloumns.
-            logger.writetofile(participant.ToString() + "," + "=\"" + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + "\"");//participant number and time of test start.
+            logger.writetofile("Participant Number: " + participant.ToString() + ",Test started on: " + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"));//data coloumns.
         }
     }
     void OnLevelWasLoaded()
     {
-        if (SceneManager.GetActiveScene().name != "StartScreen")
-        {
-            logger.writetofile(",," + SceneManager.GetActiveScene().name + "," + "=\"" + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + "\"");
-        }
         if (GameObject.Find("TestManager").GetComponent<TestManager>().in_task == true)
         {
-            logger.writetofile("Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal");
+            logger.writetofile("Current Scene: " + SceneManager.GetActiveScene().name + ",Task started at: " + DateTime.UtcNow.ToString("hh:mm:ss tt"));
+            logger.writetofile("Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal, Duration");
         }
     }
 	void Update ()
     {
         if (GameObject.Find("TestManager").GetComponent<Python>().stream_data == true)//checks to see if the bool in the python script is true, if so it writes the data from the "myString" in the python script to the log file.
         {
-            logger.writetofile(GameObject.Find("TestManager").GetComponent<Python>().python_output);
+            logger.writetofile(GameObject.Find("TestManager").GetComponent<Python>().python_output + Time.timeSinceLevelLoad.ToString());
         }
-
-        //time = Time.time;
-        //logger.writetofile(time.ToString()); write the current time to the log file every update loop.
     }
 }

@@ -20,27 +20,24 @@ public class Python : MonoBehaviour
     string[] ports;//array of ports;
     string port = "COM3";//port acceleromter will connect to.
 
+    TextAsset sensor;
     void Start ()
     {
         stream_data = false;
-
-        string python = "python";
-        string python_script =  @"Assets/Python/sensor.py";
          
-        //UnityEngine.Debug.Log(python_script);//location of python script.
+        string python = "python";
+
+        sensor = (TextAsset)Resources.Load("sensor", typeof(TextAsset));//loads in the text file containing the python code.
+        string python_script = "-c \"" + sensor.text + "\"";//adds the python compile keys.
 
         python_info = new ProcessStartInfo(python);
-        python_info.UseShellExecute = false;
-        python_info.RedirectStandardOutput = true;
-        python_info.CreateNoWindow = true;
-
+        python_info.UseShellExecute = false;//false
+        python_info.RedirectStandardOutput = true;//true
+        python_info.CreateNoWindow = true;//true
         python_info.Arguments = python_script;
-
         python_process = new Process();
         python_process.StartInfo = python_info;
-
         python_process.Start();
-
         python_streamreader = python_process.StandardOutput;
         python_output = python_streamreader.ReadLine();
 

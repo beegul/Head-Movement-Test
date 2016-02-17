@@ -329,21 +329,12 @@ public class TestManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         randomize_test();
-
-        //debug to show current order of coroutines.
-        //Debug.Log("test order:");
-        //for (int i = 0; i < coroutine_list.Count; i++)
-        //{
-        //    Debug.Log(coroutine_list[i]);
-        //}
-
-        //Debug.Log(Application.persistentDataPath);
     }
     void Update()
     {
         if(!automize)
         {
-            if(Input.GetKeyDown(KeyCode.Space))//starts the coroutines when the pace button is pressed on the start screen.
+            if(Input.GetKeyDown(KeyCode.Space))//starts the coroutines when the space button is pressed on the start screen.
             {
                 StartCoroutine(coroutine_list[0]);
             }
