@@ -52,14 +52,14 @@ public class Logger : MonoBehaviour
         if (GameObject.Find("TestManager").GetComponent<TestManager>().in_task == true)
         {
             logger.writetofile("Current Scene: " + SceneManager.GetActiveScene().name + ",Task started at: " + DateTime.UtcNow.ToString("hh:mm:ss tt"));
-            logger.writetofile("Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal, Duration");
+            logger.writetofile("Time, Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal");
         }
     }
 	void Update ()
     {
         if (GameObject.Find("TestManager").GetComponent<Python>().stream_data == true)//checks to see if the bool in the python script is true, if so it writes the data from the "myString" in the python script to the log file.
         {
-            logger.writetofile(GameObject.Find("TestManager").GetComponent<Python>().python_output + Time.timeSinceLevelLoad.ToString());
+            logger.writetofile(Time.timeSinceLevelLoad.ToString() + GameObject.Find("TestManager").GetComponent<Python>().python_output);
         }
     }
 }
