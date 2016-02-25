@@ -314,6 +314,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   in_task: 0
+  VRTask1: {fileID: 178734, guid: 420f7015d1effde49bbe5e58e2bc1940, type: 2}
+  VRTask2: {fileID: 150178, guid: e1b4782052252124a94084ff246ee645, type: 2}
+  VRTask3: {fileID: 124530, guid: 23f698b865f469e4489b0ca4173322db, type: 2}
+  KeepHeadsetOn: {fileID: 113236, guid: 3b6458bee3ae22b4fb8c4a6f0f3bc004, type: 2}
+  RemoveHeadset: {fileID: 160772, guid: 8b650357134a3ef4cb1ea36e93dbc591, type: 2}
+  VRTask1Instructions: {fileID: 159488, guid: 5255c0bc0fc81144f85693f83010cb01, type: 2}
+  VRTask2Instructions: {fileID: 148684, guid: 70100b83cc2bee6408e47e397f1ded94, type: 2}
+  VRTask3Instructions: {fileID: 116356, guid: 599a59c06cab1234b84f98bc61ed480f, type: 2}
+  current_task: 
 --- !u!4 &331060383
 Transform:
   m_ObjectHideFlags: 0
@@ -341,7 +350,6 @@ MonoBehaviour:
   sensor_connected: 0
   stream_data: 0
   com3_connected: 0
-  sensor: {fileID: 4900000, guid: f58834599fefe5e4ebf872f6ad29cb6f, type: 3}
 --- !u!1 &349200940
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,14 +374,14 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 349200940}
-  m_Text: Press the Spacebar to begin
+  m_Text: Press the left or right trigger to begin
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 500
+  m_FontSize: 300
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}

@@ -28,7 +28,7 @@ public class Logger : MonoBehaviour
             string filename = Path.GetFileNameWithoutExtension(logger.path);
             string extension = Path.GetExtension(logger.path);
             int number = 1;
-            if (File.Exists(logger.path))
+            if (File.Exists(logger.path)) 
             {
                 Match regex = Regex.Match(logger.path, @"(.+) \((\d+)\)\.\w+");
                 if (regex.Success)
@@ -47,19 +47,28 @@ public class Logger : MonoBehaviour
             logger.writetofile("Participant Number: " + participant.ToString() + ",Test started on: " + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"));//data coloumns.
         }
     }
-    void OnLevelWasLoaded()
-    {
-        if (GameObject.Find("TestManager").GetComponent<TestManager>().in_task == true)
-        {
-            logger.writetofile("Current Scene: " + SceneManager.GetActiveScene().name + ",Task started at: " + DateTime.UtcNow.ToString("hh:mm:ss tt"));
-            logger.writetofile("Time, Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal");
-        }
-    }
-	void Update ()
+    //void OnLevelWasLoaded()
+    //{
+    //    if (GameObject.Find("TestManager").GetComponent<TestManager>().in_task == true)
+    //    {
+    //        logger.writetofile("Current Scene: " + GameObject.Find("TestManager").GetComponent<TestManager>().current_task + ",Task started at: " + DateTime.UtcNow.ToString("hh:mm:ss tt"));
+    //        logger.writetofile("Log Increment, Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal, Task Time");
+    //    }
+    //}
+	void FixedUpdate()
     {
         if (GameObject.Find("TestManager").GetComponent<Python>().stream_data == true)//checks to see if the bool in the python script is true, if so it writes the data from the "myString" in the python script to the log file.
         {
-            logger.writetofile(Time.timeSinceLevelLoad.ToString() + GameObject.Find("TestManager").GetComponent<Python>().python_output);
+            logger.writetofile(Time.deltaTime.ToString() + ", " + GameObject.Find("TestManager").GetComponent<Python>().python_output + ", " + Time.timeSinceLevelLoad.ToString());
+        }
+    }
+    void Update()
+    {
+        if (GameObject.Find("TestManager").GetComponent<TestManager>().in_task == true)
+        {
+            logger.writetofile("Current Scene: " + GameObject.Find("TestManager").GetComponent<TestManager>().current_task + ",Task started at: " + DateTime.UtcNow.ToString("hh:mm:ss tt"));
+            logger.writetofile("Log Increment, Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal, Task Time");
+            GameObject.Find("TestManager").GetComponent<TestManager>().in_task = false;
         }
     }
 }

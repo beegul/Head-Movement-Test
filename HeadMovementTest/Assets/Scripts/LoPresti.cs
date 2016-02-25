@@ -5,8 +5,7 @@ using UnityEngine.VR;
 
 public class LoPresti : MonoBehaviour
 {
-    //Declarations of waypoints.
-    private GameObject Circle;//Moving target.
+    private GameObject Circle;
     private GameObject plus_X;
     private GameObject plus_Y;
     private GameObject minus_X;
@@ -17,7 +16,6 @@ public class LoPresti : MonoBehaviour
     private GameObject plus_X_minus_Y;
     private GameObject Centre;
    
-    //Declarations of movement bools.
     private bool move_to_right = true;
     private bool move_to_left = false;
     private bool move_to_top = false;
@@ -28,9 +26,6 @@ public class LoPresti : MonoBehaviour
     private bool move_to_bottom_left = false;
 
     public float speed;//sets the movement speed of the circle.
-
-    string VRTask2 = "VR Task 2";
-    string VRTask3 = "VR Task 3";
 
     string NVRTask2 = "NVR Task 2";
     string NVRTask3 = "NVR Task 3";
@@ -63,9 +58,25 @@ public class LoPresti : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == NVRWTask2 || SceneManager.GetActiveScene().name == NVRWTask3)//disables VR.
         {
+            if(SceneManager.GetActiveScene().name == NVRTask2)
+            {
+                GameObject.Find("TestManager").GetComponent<TestManager>().current_task = "NVR Task 2";
+            }
+            if(SceneManager.GetActiveScene().name == NVRTask3)
+            {
+                GameObject.Find("TestManager").GetComponent<TestManager>().current_task = "NVR Task 3";
+            }
+            if(SceneManager.GetActiveScene().name == NVRWTask2)
+            {
+                GameObject.Find("TestManager").GetComponent<TestManager>().current_task = "NVRW Task 2";
+            }
+            if(SceneManager.GetActiveScene().name == NVRWTask3)
+            {
+                GameObject.Find("TestManager").GetComponent<TestManager>().current_task = "NVRW Task 3";
+            }
             VRSettings.enabled = false;
         }
-        if (SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == VRTask3)//enables VR.
+        if (GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3")//enables VR.
         {
             VRSettings.enabled = true;
         }
@@ -73,7 +84,7 @@ public class LoPresti : MonoBehaviour
     IEnumerator centre()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)//checks the current scenes name.
+        if (SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)//checks the current scenes name.  //SceneManager.GetActiveScene().name == NVRTask3
         {
             while (Vector3.Distance(Circle.transform.position, Centre.transform.position) > close_enough)
             {
@@ -81,7 +92,7 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = Centre.transform.position;
         }
@@ -95,7 +106,7 @@ public class LoPresti : MonoBehaviour
     IEnumerator right()
     {
         yield return new WaitForSeconds(2.0f);
-        if(SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+        if(SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             while(Vector3.Distance(Circle.transform.position, plus_X.transform.position) > close_enough)
             {
@@ -103,21 +114,21 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = plus_X.transform.position;
         }
 
         if (Circle.transform.position == plus_X.transform.position)
         {
-            yield return StartCoroutine(centre());//executes this coroutine, when it has completed, continue the rest of this code.
+            yield return StartCoroutine(centre());
             move_to_left = true;
         }
     }
     IEnumerator left()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+        if (SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             while(Vector3.Distance(Circle.transform.position, minus_X.transform.position) > close_enough)
             {
@@ -125,7 +136,7 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = minus_X.transform.position;
         }
@@ -138,7 +149,7 @@ public class LoPresti : MonoBehaviour
     IEnumerator top()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+        if (SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             while(Vector3.Distance(Circle.transform.position, plus_Y.transform.position) > close_enough)
             {
@@ -146,7 +157,7 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = plus_Y.transform.position;
         }
@@ -159,7 +170,7 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom()
     {
         yield return new WaitForSeconds(2.0f);
-        if (SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+        if (SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             while(Vector3.Distance(Circle.transform.position, minus_Y.transform.position) > close_enough)
             {
@@ -167,7 +178,7 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = minus_Y.transform.position;
         }
@@ -180,7 +191,7 @@ public class LoPresti : MonoBehaviour
     IEnumerator top_left()
     {
         yield return new WaitForSeconds(2.0f);
-        if(SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+        if(SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             while(Vector3.Distance(Circle.transform.position, minus_X_plus_Y.transform.position) > close_enough)
             {
@@ -188,7 +199,7 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = minus_X_plus_Y.transform.position;
         }
@@ -201,7 +212,7 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom_right()
     {
         yield return new WaitForSeconds(2.0f);
-        if(SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+        if(SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             while(Vector3.Distance(Circle.transform.position, plus_X_minus_Y.transform.position) > close_enough)
             {
@@ -209,7 +220,7 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = plus_X_minus_Y.transform.position;
         }
@@ -222,7 +233,7 @@ public class LoPresti : MonoBehaviour
     IEnumerator top_right()
     {
         yield return new WaitForSeconds(2.0f);
-        if(SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+        if(SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             while(Vector3.Distance(Circle.transform.position, plus_X_plus_Y.transform.position) > close_enough)
             {
@@ -230,7 +241,7 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = plus_X_plus_Y.transform.position;
         }
@@ -243,7 +254,7 @@ public class LoPresti : MonoBehaviour
     IEnumerator bottom_left()
     {
         yield return new WaitForSeconds(2.0f);
-        if(SceneManager.GetActiveScene().name == NVRTask2 || SceneManager.GetActiveScene().name == VRTask2 || SceneManager.GetActiveScene().name == NVRWTask2)
+        if(SceneManager.GetActiveScene().name == NVRTask2 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 2" || SceneManager.GetActiveScene().name == NVRWTask2)
         {
             while(Vector3.Distance(Circle.transform.position, minus_X_minus_Y.transform.position) > close_enough)
             {
@@ -251,7 +262,7 @@ public class LoPresti : MonoBehaviour
                 yield return null;
             }
         }
-        if (SceneManager.GetActiveScene().name == NVRTask3 || SceneManager.GetActiveScene().name == VRTask3 || SceneManager.GetActiveScene().name == NVRWTask3)
+        if (SceneManager.GetActiveScene().name == NVRTask3 || GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 3" || SceneManager.GetActiveScene().name == NVRWTask3)
         {
             Circle.transform.position = minus_X_minus_Y.transform.position;
         }

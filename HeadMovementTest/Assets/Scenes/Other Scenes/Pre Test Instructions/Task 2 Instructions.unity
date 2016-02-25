@@ -202,14 +202,14 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 651117319}
-  m_Text: Press the spacebar to begin.
+  m_Text: Press the left or right trigger to begin.
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 300
+  m_FontSize: 200
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
@@ -695,7 +695,7 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3d89cd30f9318bb46b8cf8fba9dd61c8, type: 2}
+  - {fileID: 2100000, guid: 59d401b77c122d447b642088f605f172, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -779,7 +779,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1657982585}
-  m_Text: Follow the yellow circle.
+  m_Text: Follow the blue circle.
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1

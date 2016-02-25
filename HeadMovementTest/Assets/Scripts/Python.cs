@@ -18,35 +18,36 @@ public class Python : MonoBehaviour
     public bool com3_connected;
 
     string[] ports;//array of ports;
-    string port = "COM3";//port acceleromter will connect to.
+    string port = "COM3";//port accelerometer will connect to.
 
     TextAsset sensor;
     void Start ()
     {
         stream_data = false;
-         
+                
         string python = "python";
 
         sensor = (TextAsset)Resources.Load("sensor", typeof(TextAsset));//loads in the text file containing the python code.
         string python_script = "-c \"" + sensor.text + "\"";//adds the python compile keys.
 
         python_info = new ProcessStartInfo(python);
-        python_info.UseShellExecute = false;//false
-        python_info.RedirectStandardOutput = true;//true
-        python_info.CreateNoWindow = true;//true
+        python_info.UseShellExecute = false;
+        python_info.RedirectStandardOutput = true;
+        python_info.CreateNoWindow = true;
         python_info.Arguments = python_script;
+
         python_process = new Process();
         python_process.StartInfo = python_info;
         python_process.Start();
+
         python_streamreader = python_process.StandardOutput;
         python_output = python_streamreader.ReadLine();
 
         ports = SerialPort.GetPortNames();
 
-        if (String.IsNullOrEmpty(python_output) == true)//intial check to see if data is being streamed from the sensor.
+        if (String.IsNullOrEmpty(python_output) == true)//initial check to see if data is being streamed from the sensor.
         {
-            //UnityEngine.Debug.Log("No Python data stream.");
-            sensor_connected = false;//sets this to false, which displays the text in ConnectionStatus.cs
+            sensor_connected = false;
         }
         else
         {
@@ -55,7 +56,6 @@ public class Python : MonoBehaviour
 
         if (Array.IndexOf(ports, port) < 0)
         {
-            UnityEngine.Debug.Log("COM3 not connected");
             sensor_connected = false;
             com3_connected = false;
         }
@@ -77,7 +77,6 @@ public class Python : MonoBehaviour
         }
         if(Array.IndexOf(ports, port) < 0)
         {
-            //UnityEngine.Debug.Log("COM3 not connected");
             sensor_connected = false;
             com3_connected = false;
         }
@@ -89,20 +88,15 @@ public class Python : MonoBehaviour
     void get_data()
     {
         python_streamreader = python_process.StandardOutput;
-        python_output = python_streamreader.ReadLine();//we are always logging acclerometer data.
+        python_output = python_streamreader.ReadLine();//we are always logging data.
     }
 	void Update ()
     {
         check_connection();
         if(stream_data == true)
         {
-            //UnityEngine.Debug.Log("Data stream true, logging data");
             get_data();
         }
-        //else
-        //{
-            //UnityEngine.Debug.Log("Data stream not true, not logging data");
-        //}
     }
     void OnApplicationQuit()
     {
