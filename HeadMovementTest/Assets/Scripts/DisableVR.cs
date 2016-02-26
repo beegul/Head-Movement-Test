@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.VR;
 
 public class DisableVR : MonoBehaviour
 {
-	void Awake ()
+	void Awake()
     {
-        VRSettings.enabled = false;
+        VRSettings.enabled = false;//Disables VR.
     }
 }

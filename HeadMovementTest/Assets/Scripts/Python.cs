@@ -1,105 +1,104 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 using System.IO;
 using System.IO.Ports;
 using System.Diagnostics;
-using UnityEngine.UI;
 
 public class Python : MonoBehaviour
 {
-    ProcessStartInfo python_info;
-    Process python_process;
-    StreamReader python_streamreader;
-    public string python_output;
+    private ProcessStartInfo PythonInfo;
+    private Process PythonProcess;
+    private StreamReader PythonStreamreader;
+    private string PythonExe;
+    private string PythonScript;
+    public string PythonOutput;
 
-    public bool sensor_connected;//this is used to display the "sensor not connected" text from ConnectionStatus.cs
-    public bool stream_data;//this is enabled and disables in the TestManager.cs script, allowing data to only be read when the partcipants are completing the tasks.
-    public bool com3_connected;
+    public bool SensorConnected = false;//This is used to display the "sensor not connected" text from ConnectionStatus.cs
+    public bool StreamData = false;//This is enabled and disabled in the TestManager.cs script, allowing data to only be read when the partcipants are completing the tasks.
+    public bool COMConnected = false;//This is toggled true and false depending on if the acceleromter is connected to the correct COM port. In this case, it needs to be connected to COM3.
 
-    string[] ports;//array of ports;
-    string port = "COM3";//port accelerometer will connect to.
+    private string[] Ports;//This array will save all COM connected devices, allowing us to scan through it and find out device.
+    private string Port = "COM3";
 
-    TextAsset sensor;
+    private TextAsset Sensor;//This is what we will save our Python script into, as a .txt file.
+
     void Start ()
     {
-        stream_data = false;
-                
-        string python = "python";
+        StreamData = false;              
+        PythonExe = "python";
 
-        sensor = (TextAsset)Resources.Load("sensor", typeof(TextAsset));//loads in the text file containing the python code.
-        string python_script = "-c \"" + sensor.text + "\"";//adds the python compile keys.
+        Sensor = (TextAsset)Resources.Load("sensor", typeof(TextAsset));//Loads in the text file containing the python code.
+        PythonScript = "-c \"" + Sensor.text + "\"";//Adds the Python compile keys.
 
-        python_info = new ProcessStartInfo(python);
-        python_info.UseShellExecute = false;
-        python_info.RedirectStandardOutput = true;
-        python_info.CreateNoWindow = true;
-        python_info.Arguments = python_script;
+        PythonInfo = new ProcessStartInfo(PythonExe);
+        PythonInfo.UseShellExecute = false;//Stops the Python shell being opened.
+        PythonInfo.RedirectStandardOutput = true;//Redirects the output to Unity so it can be logged.
+        PythonInfo.CreateNoWindow = true;//Stop a window being opened to show output.
+        PythonInfo.Arguments = PythonScript;//Passes our script to our Python process.
 
-        python_process = new Process();
-        python_process.StartInfo = python_info;
-        python_process.Start();
+        PythonProcess = new Process();
+        PythonProcess.StartInfo = PythonInfo;
+        PythonProcess.Start();
 
-        python_streamreader = python_process.StandardOutput;
-        python_output = python_streamreader.ReadLine();
+        PythonStreamreader = PythonProcess.StandardOutput;
+        PythonOutput = PythonStreamreader.ReadLine();
 
-        ports = SerialPort.GetPortNames();
+        Ports = SerialPort.GetPortNames();
 
-        if (String.IsNullOrEmpty(python_output) == true)//initial check to see if data is being streamed from the sensor.
+        if (String.IsNullOrEmpty(PythonOutput) == true)//Initial check to see if data is being streamed from the sensor.
         {
-            sensor_connected = false;
+            SensorConnected = false;
         }
         else
         {
-            sensor_connected = true;
+            SensorConnected = true;
         }
-
-        if (Array.IndexOf(ports, port) < 0)
+        if (Array.IndexOf(Ports, Port) < 0)//Initial check to see if our sensor is connected to the correct COM port.
         {
-            sensor_connected = false;
-            com3_connected = false;
+            SensorConnected = false;
+            COMConnected = false;
         }
         else
         {
-            com3_connected = true;
+            COMConnected = true;
         }
     }
-    void check_connection()
+    void check_connection()//Constantly checks to see of the connection to the sensor is still there.
     {
-        ports = SerialPort.GetPortNames();
-        if (String.IsNullOrEmpty(python_output) == true)
+        Ports = SerialPort.GetPortNames();
+        if (String.IsNullOrEmpty(PythonOutput) == true)
         {
-            sensor_connected = false;
+            SensorConnected = false;
         }
         else
         {
-            sensor_connected = true;
+            SensorConnected = true;
         }
-        if(Array.IndexOf(ports, port) < 0)
+        if(Array.IndexOf(Ports, Port) < 0)
         {
-            sensor_connected = false;
-            com3_connected = false;
+            SensorConnected = false;
+            COMConnected = false;
         }
         else
         {
-            com3_connected = true;
+            COMConnected = true;
         }
     }
     void get_data()
     {
-        python_streamreader = python_process.StandardOutput;
-        python_output = python_streamreader.ReadLine();//we are always logging data.
+        PythonStreamreader = PythonProcess.StandardOutput;//Send the sensor output to the stream reader, then assigns it to our string.
+        PythonOutput = PythonStreamreader.ReadLine();
     }
 	void Update ()
     {
         check_connection();
-        if(stream_data == true)
+        if(StreamData == true)//If the TaskManager is asking for data to be streamed, enable data to be logged from the Accelerometer.
         {
             get_data();
         }
     }
-    void OnApplicationQuit()
+    void OnApplicationQuit()//When the program closes, we stop the Python process. 
     {
-        python_process.Close();
+        PythonProcess.Close();
     }
 }

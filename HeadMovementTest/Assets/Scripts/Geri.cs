@@ -1,52 +1,48 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.VR;
-using System.Collections;
 
 public class Geri : MonoBehaviour
 {
-    public float minimum = 0.0f;
-    public float maximum = 1.0f;
-    public float duration = 5.0f;
+    public float Minimum = 0.0f;//The minimum opacity (invisible).
+    public float Maximum = 1.0f;//The maximum opacity
+    private float Duration = 60.0f;//The fixed duration that the target image will reach full clarity.
 
-    private float start_time;
-    public SpriteRenderer sprite;
+    private float StartTime = 0.0f;
+    private float time = 0.0f;
+    public SpriteRenderer Target;
 
-    GameObject target;
-
-    string NVRTask1 = "NVR Task 1";
-    string NVRWTask1 = "NVRW Task 1";
+    private GameObject target;//The same target as the one we have assigned to the SpriteRenderer, but this GameObject will be used to set it to a random position when the task starts.
 
     void Start ()
     {
-        target = GameObject.Find("Target");
-        start_time = Time.time;
+        target = GameObject.Find("Target");//Assigns out target to our GameObject.
+        StartTime = Time.time;
 
-        sprite.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        Target.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
-        if (SceneManager.GetActiveScene().name == NVRTask1 || SceneManager.GetActiveScene().name == NVRWTask1)//disables vr and sets task name.
+        if (SceneManager.GetActiveScene().name == "NVR Task 1" || SceneManager.GetActiveScene().name == "NVRW Task 1")//Disables VR if the current scene in Non-VR or Non-VR Weighted.
         {
-            if(SceneManager.GetActiveScene().name == NVRTask1)
+            if(SceneManager.GetActiveScene().name == "NVR Task 1")//Sets the name of the current task the loaded scene.
             {
-                GameObject.Find("TestManager").GetComponent<TestManager>().current_task = "NVR Task 1";
+                GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVR Task 1";
             }
-            if (SceneManager.GetActiveScene().name == NVRWTask1)
+            if (SceneManager.GetActiveScene().name == "NVRW Task 1")
             {
-                GameObject.Find("TestManager").GetComponent<TestManager>().current_task = "NVRW Task 1";
+                GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVRW Task 1";
             }
-            target.transform.position = new Vector3(Random.Range(-25.0f, 25.0f), Random.Range(-15.0f, 15.0f), -1.0f);
+            target.transform.position = new Vector3(Random.Range(-25.0f, 25.0f), Random.Range(-15.0f, 15.0f), -1.0f);//Sets the position of the target to a random position within the current viewport.
             VRSettings.enabled = false;
         }
-        if (GameObject.Find("TestManager").GetComponent<TestManager>().current_task == "VR Task 1")//enables VR and sets position of the target within the vr scene.
+        if (GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask == "VR Task 1")//Enables VR and sets position of the target within the VR scene.
         {
             target.transform.position = new Vector3(Random.Range(-1.3f, 1.3f), Random.Range(1.95f, 3.2f), -3.5f);
             VRSettings.enabled = true;
         }
-    }
-	
+    }	
 	void Update ()
     {
-        float t = (Time.time - start_time) / duration;
-        sprite.color = new Color(1.0f, 1.0f, 1.0f, Mathf.SmoothStep(minimum, maximum, t));  //increases visibility over time.  
+        time = (Time.time - StartTime) / Duration;
+        Target.color = new Color(1.0f, 1.0f, 1.0f, Mathf.SmoothStep(Minimum, Maximum, time));//Increases the visibility of the sprite over the duration of the "Minimum" to "Maximum" opacity level. 
 	}
 }

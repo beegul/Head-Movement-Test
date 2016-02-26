@@ -6,48 +6,48 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartScreen.unity
+    path: Assets/Scenes/Start Screen.unity
   - enabled: 1
-    path: Assets/Scenes/VR Tasks/VR Task 1.unity
+    path: Assets/Scenes/VR Scenes/VR Task 1.unity
   - enabled: 1
-    path: Assets/Scenes/VR Tasks/VR Task 2.unity
+    path: Assets/Scenes/VR Scenes/VR Task 2.unity
   - enabled: 1
-    path: Assets/Scenes/VR Tasks/VR Task 3.unity
+    path: Assets/Scenes/VR Scenes/VR Task 3.unity
   - enabled: 1
-    path: Assets/Scenes/NVR Tasks/NVR Task 1.unity
+    path: Assets/Scenes/NVR Scenes/NVR Task 1.unity
   - enabled: 1
-    path: Assets/Scenes/NVR Tasks/NVR Task 2.unity
+    path: Assets/Scenes/NVR Scenes/NVR Task 2.unity
   - enabled: 1
-    path: Assets/Scenes/NVR Tasks/NVR Task 3.unity
+    path: Assets/Scenes/NVR Scenes/NVR Task 3.unity
   - enabled: 1
-    path: Assets/Scenes/NVRW Tasks/NVRW Task 1.unity
+    path: Assets/Scenes/NVRW Scenes/NVRW Task 1.unity
   - enabled: 1
-    path: Assets/Scenes/NVRW Tasks/NVRW Task 2.unity
+    path: Assets/Scenes/NVRW Scenes/NVRW Task 2.unity
   - enabled: 1
-    path: Assets/Scenes/NVRW Tasks/NVRW Task 3.unity
+    path: Assets/Scenes/NVRW Scenes/NVRW Task 3.unity
   - enabled: 1
-    path: Assets/Scenes/EndScreen.unity
+    path: Assets/Scenes/End Screen.unity
   - enabled: 1
-    path: Assets/Scenes/Other Scenes/Pre Scenario/Pre VR.unity
+    path: Assets/Scenes/VR Scenes/Pre VR.unity
   - enabled: 1
+    path: Assets/Scenes/NVRW Scenes/Pre NVRW.unity
+  - enabled: 1
+    path: Assets/Scenes/Instruction Scenes/Task 1 Instructions.unity
+  - enabled: 1
+    path: Assets/Scenes/Instruction Scenes/Task 2 Instructions.unity
+  - enabled: 1
+    path: Assets/Scenes/Instruction Scenes/Task 3 Instructions.unity
+  - enabled: 1
+    path: Assets/Scenes/NVRW Scenes/Post NVRW.unity
+  - enabled: 0
     path: Assets/Scenes/Other Scenes/Pre Scenario/Pre NVR.unity
-  - enabled: 1
-    path: Assets/Scenes/Other Scenes/Pre Scenario/Pre NVRW.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Other Scenes/Post Scenario/PostVR.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Other Scenes/Post Scenario/AnotherVR.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Other Scenes/Pre Test Instructions/VR Task 1 Instructions.unity
-  - enabled: 1
-    path: Assets/Scenes/Other Scenes/Pre Test Instructions/Task 1 Instructions.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Other Scenes/Pre Test Instructions/VR Task 2 Instructions.unity
-  - enabled: 1
-    path: Assets/Scenes/Other Scenes/Pre Test Instructions/Task 2 Instructions.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Other Scenes/Pre Test Instructions/VR Task 3 Instructions.unity
-  - enabled: 1
-    path: Assets/Scenes/Other Scenes/Pre Test Instructions/Task 3 Instructions.unity
-  - enabled: 1
-    path: Assets/Scenes/Other Scenes/Post Scenario/PostNVRW.unity

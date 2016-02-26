@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EndTest : MonoBehaviour
 {
@@ -7,7 +6,7 @@ public class EndTest : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            Application.Quit();//When the Escape key is pressed, quit the application.
         }
     }
 }

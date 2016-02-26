@@ -2,22 +2,21 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.VR;
-using XInputDotNetPure;
+using XInputDotNetPure;//This allows Xbox 360 Controller support.
 
 public class TestManager : MonoBehaviour
 {
-    private List<List<int>> condition_list = new List<List<int>>();//list of lists.
+    private List<List<int>> ConditionList = new List<List<int>>();//The List of Lists, contains the full order of the experiment.
+    private List<int> VRList = new List<int>();//A list that contains the random order for our VR tasks.
+    private List<int> NVRList = new List<int>();//A list that contains the random order for our Non-VR tasks.
+    private List<int> NVRWList = new List<int>();//A list that contains the random order for our Non-VR Weighted tasks.
+    private List<string> CoroutineList = new List<string>();//Stores the names of the coroutines in the order that they have been randomly put into.
 
-    private List<int> vr_list = new List<int>();
-    private List<int> nvr_list = new List<int>();
-    private List<int> nvrw_list = new List<int>();
-    private List<string> coroutine_list = new List<string>();//stores the names of the coroutines in the order that they have been randomly put into.
+    public bool InTask = false;//This is set to true when we go from a transition screen into a participation task.
+    private bool Pause = false;//When true, this pauses the automation of the test.
+    private bool Automise = false;
 
-    private bool pause = false;
-    private bool automize;
-    public bool in_task = false;
-
+    //GameObjects of the tasks and instuctions for VR and intructions for Non-VR.
     public GameObject VRTask1;
     public GameObject VRTask2;
     public GameObject VRTask3;
@@ -26,394 +25,393 @@ public class TestManager : MonoBehaviour
     public GameObject VRTask1Instructions;
     public GameObject VRTask2Instructions;
     public GameObject VRTask3Instructions;
+    private GameObject Task1Instructions;
+    private GameObject Task2Instructions;
+    private GameObject Task3Instructions;
 
-    private GameObject task1_instructions;
-    private GameObject task2_instructions;
-    private GameObject task3_instructions;
+    private Vector3 VRPosition = new Vector3(0, 2.57f, -3.54f);//Position and Rotation of the tranistion scenes within the VR tasks.
+    private Quaternion VRRotation = Quaternion.Euler(0, -180, 0);
 
-    Vector3 vr_testpos = new Vector3(0, 2.57f, -3.54f);//position and rotation of tranistion scenes within vr.
-    Quaternion vr_testrot = Quaternion.Euler(0, -180, 0);
+    public string CurrentTask;//This is assigned to the task that the participant is being shown, this is then logged to thier data file.
 
-    public string current_task;
+    //Varaibles used in order to allow Xbox 360 Controller support.
+    private PlayerIndex Player;
+    private GamePadState CurrentState;
+    private GamePadState PreviousState;
 
-    //gamepad variables.
-    PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
+    private int RandomCondition = 0;
+    private int RandomVRTask = 0;
+    private int RandomNVRTask = 0;
+    private int RandomNVRWTask = 0;
 
-    void randomize_test()//randomises the condition/task order every time the application starts.
+    void RandomiseTest()//Randomises the condition/task order every time the application starts.
     {
-        int element = 0;
-        while(condition_list.Count != 3)//this generates a random number between 1 and 4 each loop, and fills that space in the list with the corresponding test condition.
+        while(ConditionList.Count != 3)//This generates a random number between 1 and 4 each loop, and fills that space in the list with the corresponding test condition.
         {
-            element = 0;
-            int condition_rand = Random.Range(1, 4);
-            if (condition_rand == 1 && !condition_list.Contains(vr_list))//vr.
+            RandomCondition = Random.Range(1, 4);
+            if (RandomCondition == 1 && !ConditionList.Contains(VRList))//VR Tasks.
             {
-                condition_list.Add(vr_list);
-                while (vr_list.Count != 3)//then populates the current list with a random order between 1-4, 4-7 or 7-10 corresponding to the scene order in scenemanger.
+                ConditionList.Add(VRList);
+                while (VRList.Count != 3)//Populates the current list with a random order between 1-4, 4-7 or 7-10 corresponding to the scene order in scenemanger.
                 {
-                    int vr_rand = Random.Range(1, 4);
-                    if (!vr_list.Contains(vr_rand))
+                    RandomVRTask = Random.Range(1, 4);
+                    if (!VRList.Contains(RandomVRTask))//Checks to see if the task corresponding to the generated number has already been added to the task list.
                     {
-                        vr_list.Add(vr_rand);
-                        element++;
+                        VRList.Add(RandomVRTask);
                     }
                 }
-                coroutine_list.Add("vr");//sets the coroutine name to be added to the list and ran in order they are assigned to the list.
+                CoroutineList.Add("VR");//sets the coroutine name to be added to the list and ran in order they are assigned to the list.
             }
-            if (condition_rand == 2 && !condition_list.Contains(nvr_list))//nvr.
+            if (RandomCondition == 2 && !ConditionList.Contains(NVRList))//Non-VR Tasks.
             {
-                element = 0;
-                condition_list.Add(nvr_list);
-                while (nvr_list.Count != 3)
+                ConditionList.Add(NVRList);
+                while (NVRList.Count != 3)
                 {
-                    int nvr_rand = Random.Range(4, 7);
-                    if (!nvr_list.Contains(nvr_rand))
+                    RandomNVRTask = Random.Range(4, 7);
+                    if (!NVRList.Contains(RandomNVRTask))
                     {
-                        nvr_list.Add(nvr_rand);
-                        element++;
+                        NVRList.Add(RandomNVRTask);
                     }
                 }
-                coroutine_list.Add("nvr");
+                CoroutineList.Add("NVR");
             }
-            if (condition_rand == 3 && !condition_list.Contains(nvrw_list))//nvrw.
+            if (RandomCondition == 3 && !ConditionList.Contains(NVRWList))//Non-VR Weighted Tasks.
             {
-                element = 0;
-                condition_list.Add(nvrw_list);
-                while (nvrw_list.Count != 3)
+                ConditionList.Add(NVRWList);
+                while (NVRWList.Count != 3)
                 {
-                    int nvrw_rand = Random.Range(7, 10);
-                    if (!nvrw_list.Contains(nvrw_rand))
+                    RandomNVRWTask = Random.Range(7, 10);
+                    if (!NVRWList.Contains(RandomNVRWTask))
                     {
-                        nvrw_list.Add(nvrw_rand);
-                        element++;
+                        NVRWList.Add(RandomNVRWTask);
                     }
                 }
-                coroutine_list.Add("nvrw");
+                CoroutineList.Add("NVRW");
             }
         }
     }
-    IEnumerator vr()
+    IEnumerator VR()
     {
-        automize = true;
-
-        SceneManager.LoadScene(11);
+        Automise = true;
+        yield return new WaitForSeconds(1);//These are used to keep the pace of the experiment uniform, ensures that the participant has a regular pause between each screen as to not feel rushsed.
+        SceneManager.LoadScene("Pre VR");
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene(1);
-        for (int i = 0; i < 3; i ++)
+        for (int i = 0; i < 3; i ++)//As we have three conditions, this loops runs three times, loading each element within our condition.
         {
-            if (i > 0 && i != 3)//asks the user to keep the vr headset on.
+            if (i > 0 && i != 3)//This loads the scene which asks the user to keep thier VR headset on.
             {
                 yield return new WaitForSeconds(1);
-                current_task = "Keep Headset On";
-                GameObject keep_on = Instantiate(KeepHeadsetOn, vr_testpos, vr_testrot) as GameObject;
+                GameObject keep_on = Instantiate(KeepHeadsetOn, VRPosition, VRRotation) as GameObject;//Creates a temporary GameObject to enable a clone of a prefab to be loaded into the same scene.
                 yield return new WaitForSeconds(5);
-                Destroy(keep_on);
+                Destroy(keep_on);//Destroys the clone.
             }
-            if(vr_list[i].Equals(1))
+            if(VRList[i] == 1)//Displays the instructions for each of the three VR tasks by applying a prefab clone into the same scene. VRList[i].Equals(1)
             {
                 yield return new WaitForSeconds(1);
-                current_task = "VR Task 1 Instructions";
-                task1_instructions = Instantiate(VRTask1Instructions, VRTask1Instructions.transform.position, VRTask1Instructions.transform.rotation) as GameObject;
+                Task1Instructions = Instantiate(VRTask1Instructions, VRTask1Instructions.transform.position, VRTask1Instructions.transform.rotation) as GameObject;
                 yield return new WaitForSeconds(1);
             }
-            if(vr_list[i].Equals(2))
+            if(VRList[i] == 2)
             {
                 yield return new WaitForSeconds(1);
-                current_task = "VR Task 2 Instructions";
-                task2_instructions = Instantiate(VRTask2Instructions, VRTask2Instructions.transform.position, VRTask2Instructions.transform.rotation) as GameObject;
+                Task2Instructions = Instantiate(VRTask2Instructions, VRTask2Instructions.transform.position, VRTask2Instructions.transform.rotation) as GameObject;
                 yield return new WaitForSeconds(1);
             }
-            if(vr_list[i].Equals(3))
+            if(VRList[i] == 3)
             {
                 yield return new WaitForSeconds(1);
-                current_task = "VR Task 3 Instructions";
-                task3_instructions = Instantiate(VRTask3Instructions, VRTask3Instructions.transform.position, VRTask3Instructions.transform.rotation) as GameObject;
+                Task3Instructions = Instantiate(VRTask3Instructions, VRTask3Instructions.transform.position, VRTask3Instructions.transform.rotation) as GameObject;
                 yield return new WaitForSeconds(1);
             }
-            pause = true;
-            while (pause == true)
+            Pause = true;
+            while (Pause == true)
             {
-                if (Input.GetKeyDown(KeyCode.Space) || state.Triggers.Left == 1 || state.Triggers.Right == 1)
+                if (Input.GetKeyDown(KeyCode.Space) || CurrentState.Triggers.Left == 1 || CurrentState.Triggers.Right == 1)//Sets the current task name to be logged to the data file.
                 {
-                    in_task = true;
-                    GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;
-                    pause = false;
+                    if(VRList[i] == 1)
+                    {
+                        CurrentTask = "VR Task 1";
+                    }
+                    if (VRList[i] == 2)
+                    {
+                        CurrentTask = "VR Task 2";
+                    }
+                    if (VRList[i] == 3)
+                    {
+                        CurrentTask = "VR Task 3";
+                    }
+                    InTask = true;
+                    GameObject.Find("TestManager").GetComponent<Python>().StreamData = true;//Asks for data to be streamed to the Logging script.
+                    Pause = false;
                 }
                 yield return null;
-                in_task = false;
+                InTask = false;
             }
-            pause = true;
-            yield return new WaitForSeconds(1);//allows the triggers to re-init to zero.
-            if (vr_list[i] == 1)
+            Pause = true;
+            yield return new WaitForSeconds(1);
+            if (VRList[i] == 1)
             {
-                current_task = "VR Task 1";
-                Destroy(task1_instructions);
-                GameObject task1_prefab = Instantiate(VRTask1, VRTask1.transform.position, VRTask1.transform.rotation) as GameObject;
-                while (pause == true)
+                Destroy(Task1Instructions);
+                GameObject task1_prefab = Instantiate(VRTask1, VRTask1.transform.position, VRTask1.transform.rotation) as GameObject;//A Temporary prefab of the current VR task.
+                while (Pause == true)
                 {
-                    if (Input.GetMouseButtonDown(0) || state.Triggers.Left == 1 || state.Triggers.Right == 1)//stops the test if the left mouse button is pressed.
+                    if (Input.GetMouseButtonDown(0) || CurrentState.Triggers.Left == 1 || CurrentState.Triggers.Right == 1)
                     {
-                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;//when the scene ends, stream_data is set to false. this stop the data stream in the python script and stopp the data being logged in the logging script.
-                        Destroy(task1_prefab);//when the image is found, remove the test from the VR screen.
-                        pause = false;
+                        GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;//When the scene ends, StreamData is set to false. This stops the data stream in the Python script and stops the data being logged in the Logging script.
+                        GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
+                        Destroy(task1_prefab);//Destroys the current task prefab, removing it from the scene.
+                        Pause = false;
                     }
                     yield return null;
-                    in_task = false;
+                    InTask = false;
                 }
             }
-            if(vr_list[i] == 2)
+            if(VRList[i] == 2)
             {
-                current_task = "VR Task 2";
-                Destroy(task2_instructions);
+                Destroy(Task2Instructions);
                 GameObject task2_prefab = Instantiate(VRTask2, VRTask2.transform.position, VRTask2.transform.rotation) as GameObject;
-                while (pause == true)
+                while (Pause == true)
                 {
-                    if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
+                    if (GameObject.Find("Circle").GetComponent<LoPresti>().LoadNext)
                     {
-                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
+                        GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;
+                        GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
                         Destroy(task2_prefab);
-                        pause = false;
+                        Pause = false;
                     }
                     yield return null;
                 }
 
             }
-            if (vr_list[i] == 3)
+            if (VRList[i] == 3)
             {
-                current_task = "VR Task 3";
-                Destroy(task3_instructions);
+                Destroy(Task3Instructions);
                 GameObject task3_prefab = Instantiate(VRTask3, VRTask3.transform.position, VRTask3.transform.rotation) as GameObject;
-                while (pause == true)
+                while (Pause == true)
                 {
-                    if(GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
+                    if(GameObject.Find("Circle").GetComponent<LoPresti>().LoadNext)
                     {
-                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
+                        GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;
+                        GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
                         Destroy(task3_prefab);
-                        pause = false;
+                        Pause = false;
                     }
                     yield return null;
                 }
             }
         }
         yield return new WaitForSeconds(1);
-        current_task = "Remove Headset";
-        GameObject remove_headset = Instantiate(RemoveHeadset, vr_testpos, vr_testrot) as GameObject;
+        CurrentTask = "Remove Headset";
+        GameObject remove_headset = Instantiate(RemoveHeadset, VRPosition, VRRotation) as GameObject;
         yield return new WaitForSeconds(5);
 
-        if(coroutine_list[0] == "vr")
+        if(CoroutineList[0] == "VR")//Checks to see if this is the current coroutine. If it is, load the next coroutine when this one has finished.
         {
-            StopCoroutine(coroutine_list[0]);
-            StartCoroutine(coroutine_list[1]);
+            StopCoroutine(CoroutineList[0]);
+            StartCoroutine(CoroutineList[1]);
         }
-        if (coroutine_list[1] == "vr")
+        if (CoroutineList[1] == "VR")
         {
-            StopCoroutine(coroutine_list[1]);
-            StartCoroutine(coroutine_list[2]);
+            StopCoroutine(CoroutineList[1]);
+            StartCoroutine(CoroutineList[2]);
         }
-        if (coroutine_list[2] == "vr")
+        if (CoroutineList[2] == "VR")//If this condition is the final condition to be shown, display the end of experiment image on the screen.
         {
-            StopCoroutine(coroutine_list[2]);
-            current_task = "End of Test";
-            SceneManager.LoadScene(10);
+            StopCoroutine(CoroutineList[2]);
+            SceneManager.LoadScene("End Screen");
         }
-
     }
-    IEnumerator nvr()
+    IEnumerator NVR()
     {
-        automize = true;
-        yield return new WaitForSeconds(0);//needs this to load the nvr instructions for some reason?
-
-        for (int i = 0; i < nvr_list.Count; i++)
+        Automise = true;
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < NVRList.Count; i++)
         {
-            if (nvr_list[i] == 4)
+            if (NVRList[i] == 4)
             {
-                current_task = "NVR Task 1 Instructions";
-                SceneManager.LoadScene(17);
+                yield return new WaitForSeconds(1);
+                SceneManager.LoadScene("Task 1 Instructions");
                 yield return new WaitForSeconds(1);
             }
-            if (nvr_list[i] == 5)
+            if (NVRList[i] == 5)
             {
-                current_task = "NVR Task 2 Instructions";
-                SceneManager.LoadScene(19);
+                yield return new WaitForSeconds(1);
+                SceneManager.LoadScene("Task 2 Instructions");
                 yield return new WaitForSeconds(1);
             }
-            if (nvr_list[i] == 6)
+            if (NVRList[i] == 6)
             {
-                current_task = "NVR Task 3 Instructions";
-                SceneManager.LoadScene(21);
+                yield return new WaitForSeconds(1);
+                SceneManager.LoadScene("Task 3 Instructions");
                 yield return new WaitForSeconds(1);
             }
-            pause = true;
-            while (pause == true)
+            Pause = true;
+            while (Pause == true)
             {
-                if (Input.GetKeyDown(KeyCode.Space) || state.Triggers.Left == 1 || state.Triggers.Right == 1)
+                if (Input.GetKeyDown(KeyCode.Space) || CurrentState.Triggers.Left == 1 || CurrentState.Triggers.Right == 1)
                 {
-                    in_task = true;
-                    SceneManager.LoadScene(nvr_list[i]);
-                    GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;
-                    pause = false;
+                    yield return new WaitForSeconds(1);
+                    InTask = true;
+                    SceneManager.LoadScene(NVRList[i]);
+                    GameObject.Find("TestManager").GetComponent<Python>().StreamData = true;
+                    Pause = false;
                 }
                 yield return null;
-                in_task = false;
+                InTask = false;
             }
-            pause = true;
+            Pause = true;
             yield return new WaitForSeconds(1);
-            if (nvr_list[i] == 4)
+            if (NVRList[i] == 4)
             {
-                while (pause == true)
+                while (Pause == true)
                 {
-                    if (Input.GetMouseButtonDown(0) || state.Triggers.Left == 1 || state.Triggers.Right == 1)//stops the test if the left mouse button is pressed.
+                    if (Input.GetMouseButtonDown(0) || CurrentState.Triggers.Left == 1 || CurrentState.Triggers.Right == 1)
                     {
-                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
-                        pause = false;
+                        GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;
+                        GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
+                        Pause = false;
                     }
                     yield return null;
                 }
             }
             else
             {
-                while (pause == true)
+                while (Pause == true)
                 {
-                    if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
+                    if (GameObject.Find("Circle").GetComponent<LoPresti>().LoadNext)
                     {
-                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
-                        pause = false;
+                        GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;
+                        GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
+                        Pause = false;
                     }
                     yield return null;
                 }
             }
         }
-        if (coroutine_list[0] == "nvr")//checks to see if this is the current coroutine, and if it is, load the next coroutine when this one has finished.
+        if (CoroutineList[0] == "NVR")
         {
-            StopCoroutine(coroutine_list[0]);
-            StartCoroutine(coroutine_list[1]);
+            StopCoroutine(CoroutineList[0]);
+            StartCoroutine(CoroutineList[1]);
         }
-        if (coroutine_list[1] == "nvr")
+        if (CoroutineList[1] == "NVR")
         {
-            StopCoroutine(coroutine_list[1]);
-            StartCoroutine(coroutine_list[2]);
+            StopCoroutine(CoroutineList[1]);
+            StartCoroutine(CoroutineList[2]);
         }
-        if (coroutine_list[2] == "nvr")
+        if (CoroutineList[2] == "NVR")
         {
-            StopCoroutine(coroutine_list[2]);
-            current_task = "End of Test";
-            SceneManager.LoadScene(10);
+            StopCoroutine(CoroutineList[2]);
+            SceneManager.LoadScene("End Screen");
         }
     }
-    IEnumerator nvrw()
+    IEnumerator NVRW()
     {
-        automize = true;
-
-        SceneManager.LoadScene(13);
+        Automise = true;
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("Pre NVRW");
         yield return new WaitForSeconds(5);
 
-        for (int i = 0; i < nvrw_list.Count; i++)
+        for (int i = 0; i < NVRWList.Count; i++)
         {
-            if (nvrw_list[i] == 7)
+            if (NVRWList[i] == 7)
             {
-                current_task = "NVRW Task 1 Instructions";
-                SceneManager.LoadScene(17);
                 yield return new WaitForSeconds(1);
+                SceneManager.LoadScene("Task 1 Instructions");
             }
-            if (nvrw_list[i] == 8)
+            if (NVRWList[i] == 8)
             {
-                current_task = "NVRW Task 2 Instructions";
-                SceneManager.LoadScene(19);
                 yield return new WaitForSeconds(1);
+                SceneManager.LoadScene("Task 2 Instructions");
             }
-            if (nvrw_list[i] == 9)
+            if (NVRWList[i] == 9)
             {
-                current_task = "NVRW Task 3 Instructions";
-                SceneManager.LoadScene(21);
                 yield return new WaitForSeconds(1);
+                SceneManager.LoadScene("Task 3 Instructions");
             }
-            pause = true;
-            while (pause == true)
+            Pause = true;
+            while (Pause == true)
             {
-                if (Input.GetKeyDown(KeyCode.Space) || state.Triggers.Left == 1 || state.Triggers.Right == 1)
+                if (Input.GetKeyDown(KeyCode.Space) || CurrentState.Triggers.Left == 1 || CurrentState.Triggers.Right == 1)
                 {
-                    in_task = true;
-                    SceneManager.LoadScene(nvrw_list[i]);
-                    GameObject.Find("TestManager").GetComponent<Python>().stream_data = true;
-                    pause = false;
+                    yield return new WaitForSeconds(1);
+                    InTask = true;
+                    SceneManager.LoadScene(NVRWList[i]);
+                    GameObject.Find("TestManager").GetComponent<Python>().StreamData = true;
+                    Pause = false;
                 }
                 yield return null;
-                in_task = false;
+                InTask = false;
             }
-            pause = true;
+            Pause = true;
             yield return new WaitForSeconds(1);
-            if (nvrw_list[i] == 7)
+            if (NVRWList[i] == 7)
             {
-                while (pause == true)
+                while (Pause == true)
                 {
-                    if (Input.GetMouseButtonDown(0) || state.Triggers.Left == 1 || state.Triggers.Right == 1)//stops the test if the left mouse button is pressed.
+                    if (Input.GetMouseButtonDown(0) || CurrentState.Triggers.Left == 1 || CurrentState.Triggers.Right == 1)//stops the test if the left mouse button is pressed.
                     {
-                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
-                        pause = false;
+                        GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;
+                        GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
+                        Pause = false;
                     }
                     yield return null;
                 }
             }
             else
             {
-                while (pause == true)
+                while (Pause == true)
                 {
-                    if (GameObject.Find("Circle").GetComponent<LoPresti>().load_next)
+                    if (GameObject.Find("Circle").GetComponent<LoPresti>().LoadNext)
                     {
-                        GameObject.Find("TestManager").GetComponent<Python>().stream_data = false;
-                        pause = false;
+                        GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;
+                        GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
+                        Pause = false;
                     }
                     yield return null;
                 }
             }
         }
-        SceneManager.LoadScene(22);//tells the user to take of the weighted headband when the nvrw tests are done.
+        SceneManager.LoadScene("Post NVRW");
         yield return new WaitForSeconds(5);
 
-        if (coroutine_list[0] == "nvrw")
+        if (CoroutineList[0] == "NVRW")
         {
-            StopCoroutine(coroutine_list[0]);
-            StartCoroutine(coroutine_list[1]);
+            StopCoroutine(CoroutineList[0]);
+            StartCoroutine(CoroutineList[1]);
         }
-        if (coroutine_list[1] == "nvrw")
+        if (CoroutineList[1] == "NVRW")
         {
-            StopCoroutine(coroutine_list[1]);
-            StartCoroutine(coroutine_list[2]);
+            StopCoroutine(CoroutineList[1]);
+            StartCoroutine(CoroutineList[2]);
         }
-        if (coroutine_list[2] == "nvrw")
+        if (CoroutineList[2] == "NVRW")
         {
-            StopCoroutine(coroutine_list[2]);
-            current_task = "End of Test";
-            SceneManager.LoadScene(10);
+            StopCoroutine(CoroutineList[2]);
+            SceneManager.LoadScene("End Screen");
         }
     }
     void Start()
     {
         DontDestroyOnLoad(this);
-        randomize_test();
+        RandomiseTest();
     }
     void Update()
     {
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
+        PreviousState = CurrentState;
+        CurrentState = GamePad.GetState(Player);
 
-        if (!automize)
+        if (!Automise)
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                StartCoroutine(coroutine_list[0]);
+                StartCoroutine(CoroutineList[0]);
             }
           
-            if (state.Triggers.Left == 1 || state.Triggers.Right == 1)
+            if (CurrentState.Triggers.Left == 1 || CurrentState.Triggers.Right == 1)
             {
-                StartCoroutine(coroutine_list[0]);
+                StartCoroutine(CoroutineList[0]);
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
         }
     }
 }
