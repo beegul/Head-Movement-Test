@@ -696,9 +696,19 @@ class BNO055(object):
         '''Return the current temperature in Celsius.'''
         return self._read_signed_byte(BNO055_TEMP_ADDR)
 
-bno = BNO055(serial_port='COM3')
+while True:
+    try:
+        bno = BNO055(serial_port='COM3')
+    except serial.SerialException:
+        continue
+    break
 
-bno.begin()
+while True:
+    try:
+        bno.begin()
+    except RuntimeError:
+        continue
+    break
 
 while True:
         heading, roll, pitch = bno.read_euler()
