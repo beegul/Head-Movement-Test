@@ -293,6 +293,7 @@ MonoBehaviour:
   VRTask3: {fileID: 124530, guid: 23f698b865f469e4489b0ca4173322db, type: 2}
   KeepHeadsetOn: {fileID: 113236, guid: 3b6458bee3ae22b4fb8c4a6f0f3bc004, type: 2}
   RemoveHeadset: {fileID: 160772, guid: 8b650357134a3ef4cb1ea36e93dbc591, type: 2}
+  LostConnectionVR: {fileID: 137442, guid: 6bbb813faa37dfc48a03f6a1b4bbf62d, type: 2}
   VRTask1Instructions: {fileID: 159488, guid: 5255c0bc0fc81144f85693f83010cb01, type: 2}
   VRTask2Instructions: {fileID: 148684, guid: 70100b83cc2bee6408e47e397f1ded94, type: 2}
   VRTask3Instructions: {fileID: 116356, guid: 599a59c06cab1234b84f98bc61ed480f, type: 2}

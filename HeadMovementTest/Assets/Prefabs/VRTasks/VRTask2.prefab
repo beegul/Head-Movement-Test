@@ -46,7 +46,7 @@ GameObject:
   - 4: {fileID: 453042}
   m_Layer: 0
   m_Name: VRTask2
-  m_TagString: Untagged
+  m_TagString: Task
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -926,6 +926,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Speed
       value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Task
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

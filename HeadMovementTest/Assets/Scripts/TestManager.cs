@@ -22,6 +22,7 @@ public class TestManager : MonoBehaviour
     public GameObject VRTask3;
     public GameObject KeepHeadsetOn;
     public GameObject RemoveHeadset;
+    public GameObject LostConnectionVR;
     public GameObject VRTask1Instructions;
     public GameObject VRTask2Instructions;
     public GameObject VRTask3Instructions;
@@ -391,6 +392,30 @@ public class TestManager : MonoBehaviour
             SceneManager.LoadScene("End Screen");
         }
     }
+    void CheckConnection()
+    {
+        if (GameObject.Find("TestManager").GetComponent<Python>().SensorConnected == false)
+        {
+            if(CurrentTask == "VR Task 1" || CurrentTask == "VR Task 2" || CurrentTask == "VR Task 3")//Checks if the current scene is VR, if so, display the VR version of the "Connection Lost, Please Restart" screen.
+            {
+                GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;
+                GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
+                StopAllCoroutines();
+                GameObject task = GameObject.FindGameObjectWithTag("Task");//Each prefab has been tagged, they are then deleted when the connection has been lost so they dont overlap the "Connection Lost, Please Restart" screen.
+                GameObject instruction = GameObject.FindGameObjectWithTag("VRInstruction");
+                Destroy(task);
+                Destroy(instruction);
+                GameObject lostconnection_prefab = Instantiate(LostConnectionVR, VRPosition, VRRotation) as GameObject;//Displays to the participant that the connection with the sensor has been lost, and asks them to restart the test.
+            }
+            if (CurrentTask == "NVR Task 1" || CurrentTask == "NVR Task 2" || CurrentTask == "NVR Task 3" || CurrentTask == "NVRW Task 1" || CurrentTask == "NVRW Task 2" || CurrentTask == "NVRW Task 3")
+            {
+                GameObject.Find("TestManager").GetComponent<Python>().StreamData = false;
+                GameObject.Find("Logger").GetComponent<Logger>().Log_Data = false;
+                StopAllCoroutines();
+                SceneManager.LoadScene("Lost Connection");
+            }
+        }
+    }
     void Start()
     {
         DontDestroyOnLoad(this);
@@ -398,6 +423,7 @@ public class TestManager : MonoBehaviour
     }
     void Update()
     {
+        CheckConnection();
         PreviousState = CurrentState;
         CurrentState = GamePad.GetState(Player);
 
@@ -406,8 +432,7 @@ public class TestManager : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space))
             {
                 StartCoroutine(CoroutineList[0]);
-            }
-          
+            }          
             if (CurrentState.Triggers.Left == 1 || CurrentState.Triggers.Right == 1)
             {
                 StartCoroutine(CoroutineList[0]);

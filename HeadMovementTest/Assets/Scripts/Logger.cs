@@ -73,5 +73,10 @@ public class Logger : MonoBehaviour
             Log_Data = true;
         }
         Task_Time += Time.deltaTime;//Increments the current time spent within the current task.
+
+        if (GameObject.Find("TestManager").GetComponent<Python>().SensorConnected == false)//Deletes the current file if connection is lost with the accelerometer.
+        {
+            File.Delete(MyLogger.Path);
+        }
     }
 }
