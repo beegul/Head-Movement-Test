@@ -274,6 +274,45 @@ RectTransform:
   m_AnchoredPosition: {x: -1, y: -100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &633202234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 633202236}
+  - 114: {fileID: 633202235}
+  m_Layer: 0
+  m_Name: CenterHeadset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &633202235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 633202234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91e8a3054816fb74ebd764e9b048eb0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &633202236
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 633202234}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
 --- !u!1001 &911584553
 Prefab:
   m_ObjectHideFlags: 0
@@ -316,6 +355,10 @@ Prefab:
     - target: {fileID: 187146, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
       propertyPath: m_Name
       value: VR_Office
+      objectReference: {fileID: 0}
+    - target: {fileID: 11445618, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
+      propertyPath: resetTrackerOnLoad
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
