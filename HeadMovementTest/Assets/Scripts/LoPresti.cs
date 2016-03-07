@@ -33,6 +33,14 @@ public class LoPresti : MonoBehaviour
     public bool LoadNext = false;//Public bool to tell other scripts that this task has finished.
     private bool Finished = false;//Internal bool to say when the task has finished.
 
+    void Awake()
+    {
+        if (SceneManager.GetActiveScene().name == "NVR Task 2" || SceneManager.GetActiveScene().name == "NVR Task 3" || SceneManager.GetActiveScene().name == "NVRW Task 2" || SceneManager.GetActiveScene().name == "NVRW Task 3")//Disables VR if the current scene in Non-VR or Non-VR Weighted.
+        {
+            VRSettings.enabled = false;
+        }
+    }
+
     void Start ()
     {
         //Assigns out GameObjects to the corresponding scene object.
@@ -49,21 +57,21 @@ public class LoPresti : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "NVR Task 2" || SceneManager.GetActiveScene().name == "NVR Task 3" || SceneManager.GetActiveScene().name == "NVRW Task 2" || SceneManager.GetActiveScene().name == "NVRW Task 3")//Disables VR if the current scene in Non-VR or Non-VR Weighted.
         {
-            if(SceneManager.GetActiveScene().name == "NVR Task 2")//Sets the name of the current task the loaded scene.
+            if (SceneManager.GetActiveScene().name == "NVR Task 2")//Sets the name of the current task the loaded scene.
             {
                 Speed = 5.0f;
                 GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVR Task 2";
             }
-            if(SceneManager.GetActiveScene().name == "NVR Task 3")
+            if (SceneManager.GetActiveScene().name == "NVR Task 3")
             {
                 GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVR Task 3";
             }
-            if(SceneManager.GetActiveScene().name == "NVRW Task 2")
+            if (SceneManager.GetActiveScene().name == "NVRW Task 2")
             {
                 Speed = 5.0f;
                 GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVRW Task 2";
             }
-            if(SceneManager.GetActiveScene().name == "NVRW Task 3")
+            if (SceneManager.GetActiveScene().name == "NVRW Task 3")
             {
                 GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVRW Task 3";
             }
@@ -310,3 +318,4 @@ public class LoPresti : MonoBehaviour
         }
     }
 }
+

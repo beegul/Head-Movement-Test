@@ -14,6 +14,14 @@ public class Geri : MonoBehaviour
 
     private GameObject target;//The same target as the one we have assigned to the SpriteRenderer, but this GameObject will be used to set it to a random position when the task starts.
 
+    void Awake()
+    {
+        if (SceneManager.GetActiveScene().name == "NVR Task 1" || SceneManager.GetActiveScene().name == "NVRW Task 1")//Disables VR if the current scene in Non-VR or Non-VR Weighted.
+        {
+            VRSettings.enabled = false;
+        }       
+    }
+
     void Start ()
     {
         target = GameObject.Find("Target");//Assigns out target to our GameObject.
@@ -36,7 +44,7 @@ public class Geri : MonoBehaviour
         }
         if (GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask == "VR Task 1")//Enables VR and sets position of the target within the VR scene.
         {
-            target.transform.position = new Vector3(Random.Range(-1.3f, 1.3f), Random.Range(1.95f, 3.2f), -3.5f);
+            target.transform.position = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(2.0f, 3.0f), -3.5f);
             VRSettings.enabled = true;
         }
     }	

@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 449440}
   - 33: {fileID: 3303556}
-  - 64: {fileID: 6405052}
   - 23: {fileID: 2338170}
   - 82: {fileID: 8274250}
   m_Layer: 0
@@ -55,8 +54,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113236}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: -0, y: 2.57, z: -3.538}
-  m_LocalScale: {x: 2.7963717, y: 1.4241427, z: 1.4241427}
+  m_LocalPosition: {x: 0, y: 2.485, z: -3.113}
+  m_LocalScale: {x: 1.3997138, y: 0.79323214, z: 0.50778157}
   m_Children:
   - {fileID: 402136}
   m_Father: {fileID: 0}
@@ -119,18 +118,6 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113236}
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &6405052
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 113236}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!82 &8274250
 AudioSource:
