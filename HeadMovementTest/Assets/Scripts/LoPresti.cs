@@ -57,29 +57,29 @@ public class LoPresti : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "NVR Task 2" || SceneManager.GetActiveScene().name == "NVR Task 3" || SceneManager.GetActiveScene().name == "NVRW Task 2" || SceneManager.GetActiveScene().name == "NVRW Task 3")//Disables VR if the current scene in Non-VR or Non-VR Weighted.
         {
-            if (SceneManager.GetActiveScene().name == "NVR Task 2")//Sets the name of the current task the loaded scene.
+            if(SceneManager.GetActiveScene().name == "NVR Task 2")//Sets the name of the current task the loaded scene.
             {
-                Speed = 5.0f;
+                Speed = 7.0f;
                 GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVR Task 2";
             }
-            if (SceneManager.GetActiveScene().name == "NVR Task 3")
+            if(SceneManager.GetActiveScene().name == "NVR Task 3")
             {
                 GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVR Task 3";
             }
-            if (SceneManager.GetActiveScene().name == "NVRW Task 2")
+            if(SceneManager.GetActiveScene().name == "NVRW Task 2")
             {
-                Speed = 5.0f;
+                Speed = 7.0f;
                 GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVRW Task 2";
             }
-            if (SceneManager.GetActiveScene().name == "NVRW Task 3")
+            if(SceneManager.GetActiveScene().name == "NVRW Task 3")
             {
                 GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask = "NVRW Task 3";
             }
             VRSettings.enabled = false;
         }
-        if (GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask == "VR Task 2" || GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask == "VR Task 3")//Enables VR if we are in a VR task.
+        if (GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask == "VR Task 2")//Enables VR if we are in a VR task.
         {
-            Speed = 0.34f;
+            Speed = 0.185f;
             VRSettings.enabled = true;
         }
     }

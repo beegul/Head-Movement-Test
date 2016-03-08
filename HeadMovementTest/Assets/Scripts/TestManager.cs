@@ -30,7 +30,7 @@ public class TestManager : MonoBehaviour
     private GameObject Task2Instructions;
     private GameObject Task3Instructions;
 
-    private Vector3 VRPosition = new Vector3(0, 2.57f, -3.54f);//Position and Rotation of the tranistion scenes within the VR tasks.
+    private Vector3 VRPosition = new Vector3(0, 2.485f, -3.133f);//Position and Rotation of the tranistion scenes within the VR tasks.
     private Quaternion VRRotation = Quaternion.Euler(0, -180, 0);
 
     public string CurrentTask;//This is assigned to the task that the participant is being shown, this is then logged to thier data file.
