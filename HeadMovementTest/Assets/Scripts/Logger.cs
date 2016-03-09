@@ -68,7 +68,7 @@ public class Logger : MonoBehaviour
         {
             Task_Time = 0.0f;//Resets the task duration to zero each time a new task loads so we know the exact duration taken for each task.
             MyLogger.WriteToFile("Current Scene: " + GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask + ",Task started at: " + DateTime.UtcNow.ToString("hh:mm:ss tt"));
-            MyLogger.WriteToFile("Heading, Roll, Pitch, Sys_cal, Gyro_cal, Accel_cal, Mag_cal, Task Time");
+            MyLogger.WriteToFile("Heading, Roll, Pitch, Gyro_cal, Task Time");
             GameObject.Find("TestManager").GetComponent<TestManager>().InTask = false;//After we have logged this start data we set the bool back to false so it is ready for the next task to set it to true.
             Log_Data = true;
         }

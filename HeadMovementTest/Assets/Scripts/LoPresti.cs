@@ -103,7 +103,6 @@ public class LoPresti : MonoBehaviour
             yield return new WaitForSeconds(2.0f);
             LoadNext = true;
         }
-        yield return new WaitForSeconds(2.0f);
     }
     IEnumerator right()
     {
