@@ -506,26 +506,6 @@ Prefab:
       propertyPath: m_Name
       value: VR_Office
       objectReference: {fileID: 0}
-    - target: {fileID: 454046, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 454046, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -2.869
-      objectReference: {fileID: 0}
-    - target: {fileID: 454046, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.854
-      objectReference: {fileID: 0}
-    - target: {fileID: 454046, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.09443457
-      objectReference: {fileID: 0}
-    - target: {fileID: 454046, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.08280527
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16b9a041968ffd14a9fc4de645977f50, type: 2}
   m_IsPrefabParent: 0

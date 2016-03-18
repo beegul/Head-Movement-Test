@@ -269,6 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Minimum: 0
   Maximum: 1
+  Duration: 5
   Target: {fileID: 435929206}
 --- !u!212 &435929206
 SpriteRenderer:
