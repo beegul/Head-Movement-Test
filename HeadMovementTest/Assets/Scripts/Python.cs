@@ -91,11 +91,8 @@ public class Python : MonoBehaviour
     }
 	void Update ()
     {
-        check_connection();
-        if(StreamData == true)//If the TaskManager is asking for data to be streamed, enable data to be logged from the Accelerometer.
-        {
-            get_data();
-        }
+        check_connection();//We always check the connection to the sensor.
+        get_data();//We are always getting the data so we don't miss any movments or the starting head position of the participant.
     }
     void OnApplicationQuit()//When the program closes, we stop the Python process. 
     {

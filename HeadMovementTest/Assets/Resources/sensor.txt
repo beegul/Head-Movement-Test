@@ -714,4 +714,4 @@ while True:
         heading, roll, pitch = bno.read_euler()
         sys, gyro, accel, mag = bno.get_calibration_status()
         if gyro == 3:
-            print(str(heading) + ',' +str(roll) + ',' + str(pitch) + ',' + str(gyro) + ',')
+            print(str(heading) + ',' +str(roll) + ',' + str(pitch) + ',')

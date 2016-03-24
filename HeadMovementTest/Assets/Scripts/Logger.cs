@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -52,14 +53,15 @@ public class Logger : MonoBehaviour
                 }
                 while (File.Exists(MyLogger.Path));
             }
-            MyLogger.WriteToFile("Participant Number: " + Participant.ToString() + ",Test started on: " + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"));//Writes the initial test data at the top of the file, Particpant Number and Start Date/Time.
+            MyLogger.WriteToFile("Participant Number:," + Participant.ToString());//Writes the initial test data at the top of the file, Particpant Number and Start Date/Time.
+            MyLogger.WriteToFile("Test started on:," + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"));
         }
     }
 	void FixedUpdate()//Logs data at a fixed interval of 0.2ms to enable uniform logging and analysis.
     {
         if (GameObject.Find("TestManager").GetComponent<Python>().StreamData == true && Log_Data == true)//Checks to see if a data stream from the Python script is true and that Log_Data has been triggered in the update loop before data logging begins.
         {
-            MyLogger.WriteToFile(GameObject.Find("TestManager").GetComponent<Python>().PythonOutput + Task_Time.ToString());//Writes the output of our Python script to our file.
+            MyLogger.WriteToFile(GameObject.Find("TestManager").GetComponent<Python>().PythonOutput + Task_Time.ToString("0.00"));//Writes the output of our Python script to our file, rounds the task time to 2 decimal places to make analysis easier.
         }
     }
     void Update()
@@ -67,14 +69,22 @@ public class Logger : MonoBehaviour
         if (GameObject.Find("TestManager").GetComponent<TestManager>().InTask == true)//Checks to see if the participant is currently in a task. If so, we log which task they are doing, and when they began the task.
         {
             Task_Time = 0.0f;//Resets the task duration to zero each time a new task loads so we know the exact duration taken for each task.
-            MyLogger.WriteToFile("Current Scene: " + GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask + ",Task started at: " + DateTime.UtcNow.ToString("hh:mm:ss tt"));
-            MyLogger.WriteToFile("Heading, Roll, Pitch, Gyro_cal, Task Time");
+            MyLogger.WriteToFile("Current Task:," + GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask);
+            MyLogger.WriteToFile("Task Start:," + DateTime.UtcNow.ToString("hh:mm:ss tt"));
+            MyLogger.WriteToFile("Heading, Roll, Pitch, Task Time");
             GameObject.Find("TestManager").GetComponent<TestManager>().InTask = false;//After we have logged this start data we set the bool back to false so it is ready for the next task to set it to true.
             Log_Data = true;
         }
         Task_Time += Time.deltaTime;//Increments the current time spent within the current task.
 
         if (GameObject.Find("TestManager").GetComponent<Python>().SensorConnected == false)//Deletes the current file if connection is lost with the accelerometer.
+        {
+            File.Delete(MyLogger.Path);
+        }
+    }
+    void OnApplicationQuit()
+    {
+        if (SceneManager.GetActiveScene().name != "End Screen")//When the escape button is pressed during the test, the current file being wrote to is deleted. Stops any junk files being kept.
         {
             File.Delete(MyLogger.Path);
         }
