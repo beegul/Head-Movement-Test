@@ -24,7 +24,7 @@ public class Geri : MonoBehaviour
 
     void Start ()
     {
-        target = GameObject.Find("Target");//Assigns out target to our GameObject.
+        target = GameObject.Find("Target");//Assigns our target to our GameObject.
         StartTime = Time.time;
 
         Target.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
@@ -44,7 +44,7 @@ public class Geri : MonoBehaviour
         }
         if (GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask == "VR Task 1")//Enables VR and sets position of the target within the VR scene.
         {
-            target.transform.position = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(2.0f, 3.0f), -3.5f);
+            transform.localPosition = new Vector3(Random.Range(-1.1f, 1.1f), Random.Range(2.0f, 3.0f), -3.5f);
             VRSettings.enabled = true;
         }
     }	

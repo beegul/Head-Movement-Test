@@ -79,7 +79,7 @@ public class LoPresti : MonoBehaviour
         }
         if (GameObject.Find("TestManager").GetComponent<TestManager>().CurrentTask == "VR Task 2")//Enables VR if we are in a VR task.
         {
-            Speed = 0.185f;
+            Speed = 0.1453f;
             VRSettings.enabled = true;
         }
     }
